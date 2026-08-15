@@ -10,9 +10,10 @@ import {
 } from "@/components/icons";
 
 export const metadata: Metadata = {
-  title: "A Marca",
+  title: "Sobre Nossa História",
   description:
-    "Conheça a história da Perfumaria Suanne e o cuidado com cada essência selecionada a dedo.",
+    "Conheça a história da Perfumaria Suanne e o cuidado com cada essência selecionada a dedo: perfumes importados e árabes de luxo, 100% originais.",
+  alternates: { canonical: "/sobre" },
 };
 
 export default function SobrePage() {
@@ -30,13 +31,13 @@ export default function SobrePage() {
 
       <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden bg-sand">
+          <div className="relative aspect-[4/3] overflow-hidden border border-gold/25 bg-ink">
             <Image
-              src="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?auto=format&fit=crop&w=1000&q=80"
+              src="/perfumes/amber-rouge.png"
               alt="Ateliê da Perfumaria Suanne"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              className="object-contain p-8"
             />
           </div>
           <div>

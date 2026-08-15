@@ -4,7 +4,7 @@ export const site = {
   url: "https://perfumariasuanne.com.br",
   whatsapp: "5521982755539",
   phone: "(21) 98275-5539",
-  email: "contato@perfumariasuanne.com.br",
+  email: "suanne.chagas4@gmail.com",
   instagram: "https://instagram.com/suannechagas",
   address: "Avenida João Ribeiro, 444 — Loja D, Pilares, Rio de Janeiro/RJ",
   cep: "20750095",
@@ -34,6 +34,10 @@ export function formatBRL(value: number): string {
     currency: "BRL",
     minimumFractionDigits: 2,
   });
+}
+
+export function pixPrice(value: number): number {
+  return Math.round(value * 0.95 * 100) / 100;
 }
 
 export function whatsappLink(message: string): string {

@@ -6,7 +6,8 @@ import { IconInstagram, IconWhatsapp } from "@/components/icons";
 export const metadata: Metadata = {
   title: "Contato",
   description:
-    "Fale com a Perfumaria Suanne pelo WhatsApp ou e-mail. Atendimento personalizado de segunda a sexta.",
+    "Fale com a Perfumaria Suanne pelo WhatsApp ou e-mail. Atendimento personalizado de segunda a sexta. Compre perfumes importados e árabes com segurança.",
+  alternates: { canonical: "/contato" },
 };
 
 export default function ContatoPage() {

@@ -11,6 +11,7 @@ import {
 import type { ReactNode } from "react";
 import { getProductBySlug } from "@/lib/products";
 import type { Product } from "@/lib/products";
+import { trackAddToCart } from "@/lib/analytics";
 
 export type CartItem = {
   slug: string;
@@ -88,6 +89,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return [...prev, { slug, qty: 1 }];
     });
     setIsOpen(true);
+    const product = getProductBySlug(slug);
+    if (product) {
+      trackAddToCart({
+        slug: product.slug,
+        name: product.name,
+        brand: product.brand,
+        category: product.category,
+        price: product.price,
+      });
+    }
   }, []);
 
   const remove = useCallback((slug: string) => {

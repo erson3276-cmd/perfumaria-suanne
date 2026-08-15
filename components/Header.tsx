@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/lib/cart";
 import { categories } from "@/lib/products";
@@ -82,12 +83,21 @@ export default function Header() {
             </nav>
           </div>
 
-          <Link href="/" className="text-center">
-            <span className="block font-serif text-xl leading-none tracking-wide text-ink sm:text-2xl">
-              Perfumaria <span className="gold-text">Suanne</span>
-            </span>
-            <span className="mt-1.5 hidden text-[10px] uppercase tracking-[0.45em] text-gold sm:block">
-              ✦ {site.tagline} ✦
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo.jpg"
+              alt="Logo Perfumaria Suanne"
+              width={48}
+              height={48}
+              className="h-11 w-11 rounded-full object-cover"
+            />
+            <span className="text-left">
+              <span className="block font-serif text-xl leading-none tracking-wide text-ink sm:text-2xl">
+                Perfumaria <span className="gold-text">Suanne</span>
+              </span>
+              <span className="mt-1.5 hidden text-[10px] uppercase tracking-[0.45em] text-gold sm:block">
+                ✦ {site.tagline} ✦
+              </span>
             </span>
           </Link>
 
@@ -119,7 +129,7 @@ export default function Header() {
             <span key={cat} className="flex items-center gap-6">
               {idx > 0 && <span className="text-[9px] text-gold">✦</span>}
               <Link
-                href={`/produtos?categoria=${encodeURIComponent(cat)}`}
+                href={`/produtos/categoria/${cat.toLowerCase()}`}
                 className="text-xs uppercase tracking-[0.28em] text-ink-soft transition-colors hover:text-gold"
               >
                 {cat}
@@ -148,7 +158,7 @@ export default function Header() {
               {categories.map((cat) => (
                 <Link
                   key={cat}
-                  href={`/produtos?categoria=${encodeURIComponent(cat)}`}
+                  href={`/produtos/categoria/${cat.toLowerCase()}`}
                   onClick={() => setMenuOpen(false)}
                   className="text-xs uppercase tracking-[0.2em] text-gold"
                 >

@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import Analytics from "@/components/Analytics";
 import { CartProvider } from "@/lib/cart";
 import { site } from "@/lib/site";
 
@@ -28,6 +29,9 @@ export const metadata: Metadata = {
   description:
     "Perfumaria Suanne: curadoria de perfumes importados e autorais de luxo. Envio para todo o Brasil com rastreio e presente exclusivo. Navegue com elegância e sofisticação.",
   metadataBase: new URL(site.url),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: `${site.name} — Perfumes Importados de Luxo`,
     description:
@@ -47,6 +51,28 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${playfair.variable} ${jost.variable}`}>
       <body className="flex min-h-screen flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "OnlineStore",
+              name: site.name,
+              url: site.url,
+              email: site.email,
+              telephone: site.phone,
+              description:
+                "Perfumaria Suanne: curadoria de perfumes importados e autorais de luxo. Envio para todo o Brasil com rastreio.",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: site.address,
+                postalCode: site.cep,
+                addressCountry: "BR",
+              },
+              areaServed: "BR",
+            }),
+          }}
+        />
         <CartProvider>
           <Header />
           <main className="flex-1">{children}</main>
@@ -54,6 +80,7 @@ export default function RootLayout({
           <CartDrawer />
           <FloatingWhatsApp />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );

@@ -12,6 +12,7 @@ import ProductCard from "@/components/ProductCard";
 import Rating from "@/components/Rating";
 import AddToCart from "@/components/AddToCart";
 import FreteCalculator from "@/components/FreteCalculator";
+import ProductViewTracker from "@/components/ProductViewTracker";
 import Ornament from "@/components/Ornament";
 import {
   IconChevronRight,
@@ -35,12 +36,17 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) return {};
+  const productTitle = `Perfume ${product.name} ${product.brand} ${product.size} | ${product.category}`;
   return {
-    title: `${product.name} — ${product.brand}`,
+    title: productTitle,
     description: product.description.slice(0, 155),
+    alternates: {
+      canonical: `/produtos/${product.slug}`,
+    },
     openGraph: {
-      title: `${product.name} — ${product.brand}`,
+      title: productTitle,
       description: product.description.slice(0, 155),
+      url: `${site.url}/produtos/${product.slug}`,
       images: [product.image],
     },
   };
@@ -67,6 +73,78 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
 
   return (
     <div>
+      <ProductViewTracker
+        product={{
+          slug: product.slug,
+          name: product.name,
+          brand: product.brand,
+          category: product.category,
+          price: product.price,
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            image: `${site.url}${product.image}`,
+            description: product.description.slice(0, 155),
+            brand: { "@type": "Brand", name: product.brand },
+            offers: {
+              "@type": "Offer",
+              url: `${site.url}/produtos/${product.slug}`,
+              priceCurrency: "BRL",
+              price: product.price.toFixed(2),
+              availability: product.inStock
+                ? "https://schema.org/InStock"
+                : "https://schema.org/OutOfStock",
+              itemCondition: "https://schema.org/NewCondition",
+            },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: product.rating,
+              reviewCount: product.reviews,
+            },
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Início",
+                item: site.url,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Perfumes",
+                item: `${site.url}/produtos`,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: product.category,
+                item: `${site.url}/produtos/categoria/${product.category.toLowerCase()}`,
+              },
+              {
+                "@type": "ListItem",
+                position: 4,
+                name: product.name,
+                item: `${site.url}/produtos/${product.slug}`,
+              },
+            ],
+          }),
+        }}
+      />
       <div className="mx-auto max-w-7xl px-5 py-6 lg:px-8">
         <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.15em] text-ink-soft">
           <Link href="/" className="transition-colors hover:text-gold">
@@ -78,7 +156,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
           </Link>
           <IconChevronRight className="h-3 w-3" />
           <Link
-            href={`/produtos?categoria=${encodeURIComponent(product.category)}`}
+            href={`/produtos/categoria/${product.category.toLowerCase()}`}
             className="transition-colors hover:text-gold"
           >
             {product.category}

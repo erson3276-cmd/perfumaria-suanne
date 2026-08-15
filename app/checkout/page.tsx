@@ -4,6 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { formatBRL, shippingFor, site, whatsappLink } from "@/lib/site";
+import {
+  trackBeginCheckout,
+  trackPurchase,
+} from "@/lib/analytics";
+import type { AnalyticsItem } from "@/lib/analytics";
 import { IconShield, IconWhatsapp } from "@/components/icons";
 import PaymentBrick from "@/components/PaymentBrick";
 import FreteCalculator from "@/components/FreteCalculator";
@@ -104,6 +109,35 @@ export default function CheckoutPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
+  const firePurchaseIfNew = (paymentId: string | null) => {
+    if (!paymentId) return;
+    try {
+      const fired = JSON.parse(
+        window.sessionStorage.getItem("perfumaria-suanne-fired") ?? "[]"
+      ) as string[];
+      if (fired.includes(paymentId)) return;
+      fired.push(paymentId);
+      window.sessionStorage.setItem(
+        "perfumaria-suanne-fired",
+        JSON.stringify(fired)
+      );
+    } catch {
+      // segue sem dedupe se o storage falhar
+    }
+    const saved = readSnapshot();
+    if (!saved || saved.items.length === 0) return;
+    const items: AnalyticsItem[] = saved.items.map((it) => ({
+      slug: it.name,
+      name: it.name,
+      brand: it.brand,
+      category: "Perfume",
+      price: it.price,
+      qty: it.qty,
+    }));
+    const total = saved.subtotal + shippingFor(saved.subtotal).fee;
+    trackPurchase(items, saved.subtotal, total, paymentId);
+  };
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const status = params.get("status");
@@ -111,10 +145,12 @@ export default function CheckoutPage() {
       const saved = readSnapshot();
       // eslint-disable-next-line react-hooks/set-state-in-effect
       if (saved) setSnapshot(saved);
-      setPaymentId(params.get("payment_id"));
+      const id = params.get("payment_id");
+      setPaymentId(id);
       setPaidStatus(status === "pending" ? "pending" : "approved");
       setStep("paid");
       clear();
+      firePurchaseIfNew(id);
     }
   }, [clear]);
 
@@ -128,6 +164,26 @@ export default function CheckoutPage() {
       })),
     [lines]
   );
+
+  const analyticsItems = useMemo<AnalyticsItem[]>(
+    () =>
+      lines.map(({ product, qty }) => ({
+        slug: product.slug,
+        name: product.name,
+        brand: product.brand,
+        category: product.category,
+        price: product.price,
+        qty,
+      })),
+    [lines]
+  );
+
+  useEffect(() => {
+    if (step === "paying" && analyticsItems.length > 0) {
+      trackBeginCheckout(analyticsItems, subtotal);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
 
   const saveSnapshot = (reference: string) => {
     const next: OrderSnapshot = {
@@ -326,6 +382,7 @@ export default function CheckoutPage() {
             setSnapshot(readSnapshot());
             setStep("paid");
             clear();
+            firePurchaseIfNew(String(payment.id));
           }}
           onCancel={() => {
             setStep("form");

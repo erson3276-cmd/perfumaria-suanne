@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import ProductsClient from "./ProductsClient";
 
 export const metadata: Metadata = {
-  title: "Perfumes Importados de Luxo",
+  title: "Perfumes Importados e Árabes — Coleção Completa",
   description:
-    "Explore a coleção de perfumes importados e autorais da Perfumaria Suanne. Filtre por categoria, busque por nota ou fragrância e escolha a sua essência.",
+    "Compre perfumes importados, árabes e de nicho: Lattafa, Armaf, Maison Alhambra, Orientica e mais. 100% originais, com frete grátis acima de R$ 300 e envio para todo o Brasil.",
+  alternates: { canonical: "/produtos" },
 };
 
 export default function ProdutosPage() {

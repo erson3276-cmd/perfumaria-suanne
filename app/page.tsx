@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import {
   getFeaturedProducts,
   products,
@@ -8,6 +9,8 @@ import {
 import { site } from "@/lib/site";
 import ProductCard from "@/components/ProductCard";
 import Ornament from "@/components/Ornament";
+import BestSellers from "@/components/BestSellers";
+import HeroBanners from "@/components/HeroBanners";
 import {
   IconArrowRight,
   IconGift,
@@ -17,15 +20,17 @@ import {
   IconWhatsapp,
 } from "@/components/icons";
 
+export const metadata: Metadata = {
+  title: "Perfumes Importados e Árabes de Luxo",
+  description:
+    "Perfumaria Suanne: perfumes importados e árabes de luxo, 100% originais, com frete grátis acima de R$ 300 e envio para todo o Brasil com rastreio.",
+};
+
 const categoryImages: Record<string, string> = {
-  Feminino:
-    "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80",
-  Masculino:
-    "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80",
-  Unissex:
-    "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80",
-  Presentes:
-    "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80",
+  Feminino: "/perfumes/jouri.jpg",
+  Masculino: "/perfumes/club-de-nuit-intense-man.jpg",
+  Unissex: "/perfumes/khamrah-waha.jpg",
+  Presentes: "/perfumes/baroque-rouge-540-branco.jpg",
 };
 
 const trustItems = [
@@ -71,7 +76,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <Hero />
+      <HeroBanners />
 
       <div className="border-y border-gold/20 bg-ink py-4 text-center text-ivory">
         <p className="px-4 text-[11px] uppercase tracking-[0.3em] text-ivory/85">
@@ -119,6 +124,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <BestSellers />
+
       <section className="bg-sand/60 py-20">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="mb-12 text-center">
@@ -136,7 +143,7 @@ export default function HomePage() {
               return (
                 <Link
                   key={cat}
-                  href={`/produtos?categoria=${encodeURIComponent(cat)}`}
+                  href={`/produtos/categoria/${cat.toLowerCase()}`}
                   className="group relative block aspect-[3/4] overflow-hidden border border-gold/20 bg-ink transition-all duration-500 hover:border-gold"
                 >
                   <Image
@@ -146,7 +153,7 @@ export default function HomePage() {
                     sizes="(max-width: 768px) 100vw, 25vw"
                     className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-70"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent" />
                   <span className="absolute right-4 top-4 border border-gold/50 bg-ink/70 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-gold-pale backdrop-blur-sm">
                     {count} {count === 1 ? "perfume" : "perfumes"}
                   </span>
@@ -165,13 +172,13 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden border border-gold/25 bg-sand">
+          <div className="relative aspect-[4/3] overflow-hidden border border-gold/25 bg-ink">
             <Image
-              src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=1000&q=80"
+              src="/perfumes/amber-rouge.png"
               alt="Ateliê Perfumaria Suanne"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              className="object-contain p-8"
             />
           </div>
           <div>
@@ -263,52 +270,5 @@ export default function HomePage() {
         </div>
       </section>
     </div>
-  );
-}
-
-function Hero() {
-  return (
-    <section className="relative flex min-h-[78vh] items-center justify-center overflow-hidden bg-ink">
-      <Image
-        src="https://images.unsplash.com/photo-1587017539504-67cfbddac569?auto=format&fit=crop&w=1800&q=80"
-        alt="Perfumes de luxo da Perfumaria Suanne"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover opacity-55"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/45 to-ink/20" />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 50% 130%, rgba(201,168,78,0.22), transparent 55%)",
-        }}
-      />
-      <div className="relative z-10 mx-auto max-w-3xl px-5 py-28 text-center text-ivory">
-        <Ornament light className="mb-6" />
-        <p className="eyebrow animate-fade-up">Perfumaria Suanne</p>
-        <h1 className="mt-5 font-serif text-4xl leading-tight sm:text-6xl">
-          Essências que eternizam{" "}
-          <span className="gold-text italic">momentos</span>
-        </h1>
-        <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-ivory/80 sm:text-lg">
-          Perfumes importados e autorais, escolhidos a dedo para quem valoriza
-          o que é raro, belo e inesquecível.
-        </p>
-        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link href="/produtos" className="btn-gold">
-            Explorar Coleção
-            <IconArrowRight className="h-4 w-4" />
-          </Link>
-          <Link href="/produtos?categoria=Presentes" className="btn-outline">
-            Presentes Especiais
-          </Link>
-        </div>
-        <p className="mt-14 text-[10px] uppercase tracking-[0.35em] text-ivory/50">
-          ★ 4,8 de avaliação · +2.000 clientes
-        </p>
-      </div>
-    </section>
   );
 }

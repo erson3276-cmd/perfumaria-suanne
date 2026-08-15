@@ -17,9 +17,25 @@ const sortLabels: Record<Sort, string> = {
   avaliacao: "Melhor avaliados",
 };
 
-export default function ProductsClient() {
+const categoryLabel = (category: string) =>
+  category === "Todos"
+    ? "Todos os Perfumes"
+    : `Perfumes ${category.charAt(0).toUpperCase()}${category.slice(1)}`;
+
+const normalizeCategory = (category: string) =>
+  category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+
+type ProductsClientProps = {
+  categoria?: string;
+};
+
+export default function ProductsClient({ categoria }: ProductsClientProps) {
   const searchParams = useSearchParams();
-  const activeCategory = searchParams.get("categoria") ?? "Todos";
+  const queryCategory = searchParams.get("categoria");
+  const activeCategory =
+    queryCategory ?? categoria ?? "Todos";
+  const normalizedCategory =
+    activeCategory === "Todos" ? "Todos" : normalizeCategory(activeCategory);
   const initialQuery = searchParams.get("q") ?? "";
 
   const [query, setQuery] = useState(initialQuery);
@@ -29,7 +45,8 @@ export default function ProductsClient() {
     const q = query.trim().toLowerCase();
     let list = products.filter((p) => {
       const matchCategory =
-        activeCategory === "Todos" || p.category === activeCategory;
+        normalizedCategory === "Todos" ||
+        p.category === normalizedCategory;
       const matchQuery =
         q === "" ||
         p.name.toLowerCase().includes(q) ||
@@ -53,7 +70,7 @@ export default function ProductsClient() {
         break;
     }
     return list;
-  }, [query, activeCategory, sort]);
+  }, [query, normalizedCategory, sort]);
 
   return (
     <div>
@@ -62,9 +79,7 @@ export default function ProductsClient() {
           <Ornament className="mb-5" />
           <p className="eyebrow">Perfumaria Suanne</p>
           <h1 className="mt-3 font-serif text-3xl text-ink sm:text-5xl">
-            {activeCategory === "Todos"
-              ? "Todos os Perfumes"
-              : `Perfumes ${activeCategory}`}
+            {categoryLabel(normalizedCategory)}
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-ink-soft">
             Fragrâncias de luxo selecionadas para cada personalidade. Encontre
@@ -77,7 +92,7 @@ export default function ProductsClient() {
         <div className="mb-8 flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-center gap-2">
             {["Todos", ...categories].map((cat) => {
-              const active = activeCategory === cat;
+              const active = normalizedCategory === cat;
               const count =
                 cat === "Todos"
                   ? products.length
@@ -85,7 +100,11 @@ export default function ProductsClient() {
               return (
                 <a
                   key={cat}
-                  href={`/produtos?categoria=${encodeURIComponent(cat)}`}
+                  href={
+                    cat === "Todos"
+                      ? "/produtos"
+                      : `/produtos/categoria/${cat.toLowerCase()}`
+                  }
                   className={`border px-4 py-2 text-xs uppercase tracking-[0.18em] transition-all duration-300 ${
                     active
                       ? "border-gold bg-gradient-to-b from-gold-light to-gold text-ivory shadow-[0_8px_20px_-8px_rgba(168,132,47,0.6)]"

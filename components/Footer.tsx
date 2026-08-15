@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { categories } from "@/lib/products";
 import { site } from "@/lib/site";
 import Ornament from "@/components/Ornament";
@@ -9,7 +10,14 @@ export default function Footer() {
     <footer className="bg-ink text-ivory">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="border-b border-ivory/10 py-16 text-center">
-          <p className="font-serif text-3xl text-ivory sm:text-4xl">
+          <Image
+            src="/logo.jpg"
+            alt="Logo Perfumaria Suanne"
+            width={72}
+            height={72}
+            className="mx-auto h-16 w-16 rounded-full object-cover"
+          />
+          <p className="mt-4 font-serif text-3xl text-ivory sm:text-4xl">
             Perfumaria <span className="gold-text">Suanne</span>
           </p>
           <Ornament light className="mt-5" />
@@ -60,7 +68,7 @@ export default function Footer() {
               {categories.map((cat) => (
                 <li key={cat}>
                   <Link
-                    href={`/produtos?categoria=${encodeURIComponent(cat)}`}
+                    href={`/produtos/categoria/${cat.toLowerCase()}`}
                     className="transition-colors hover:text-gold"
                   >
                     {cat}

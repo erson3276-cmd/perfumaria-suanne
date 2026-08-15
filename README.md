@@ -1,4 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Perfumaria Suanne
+
+E-commerce de perfumes importados e árabes de luxo — Next.js 16 · TypeScript · Tailwind.
+Domínio de produção: https://perfumariasuanne.com.br
+
+> **📋 Para entender o estado completo do projeto (SEO, rastreamento, catálogo, tráfego pago),
+> leia [`DOCUMENTACAO.md`](./DOCUMENTACAO.md).**
 
 ## Getting Started
 

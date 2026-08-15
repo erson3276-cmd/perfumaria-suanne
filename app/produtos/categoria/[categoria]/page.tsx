@@ -24,11 +24,6 @@ const categoryMeta: Record<
     description:
       "Perfumes unissex importados e árabes de luxo: âmbar, oud, patchouli e fragrâncias versáteis. 100% originais com envio para todo o Brasil.",
   },
-  presentes: {
-    title: "Presentes de Perfume para Presentear",
-    description:
-      "Caixas e conjuntos de perfume ideais para presentear: essências de luxo que eternizam momentos. Envio para todo o Brasil.",
-  },
 };
 
 export function generateStaticParams() {

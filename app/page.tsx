@@ -30,7 +30,6 @@ const categoryImages: Record<string, string> = {
   Feminino: "/perfumes/jouri.jpg",
   Masculino: "/perfumes/club-de-nuit-intense-man.jpg",
   Unissex: "/perfumes/khamrah-waha.jpg",
-  Presentes: "/perfumes/baroque-rouge-540-branco.jpg",
 };
 
 const trustItems = [
@@ -135,7 +134,7 @@ export default function HomePage() {
               Nossas Coleções
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((cat) => {
               const count = products.filter(
                 (p) => p.category === cat
@@ -150,7 +149,7 @@ export default function HomePage() {
                     src={categoryImages[cat]}
                     alt={`Perfumes ${cat}`}
                     fill
-                    sizes="(max-width: 768px) 100vw, 25vw"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-70"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent" />

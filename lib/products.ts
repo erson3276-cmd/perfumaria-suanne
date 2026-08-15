@@ -1,10 +1,9 @@
-export type Category = "Feminino" | "Masculino" | "Unissex" | "Presentes";
+export type Category = "Feminino" | "Masculino" | "Unissex";
 
 export const categories: Category[] = [
   "Feminino",
   "Masculino",
   "Unissex",
-  "Presentes",
 ];
 
 export type Note = {
@@ -287,7 +286,7 @@ export const products: Product[] = [
     category: "Feminino",
     price: 229.9,
     rating: 4.8,
-    reviews: 0,
+    reviews: 87,
     size: "100ml",
     image: "/perfumes/fakhar-gold.png",
     badge: "Novo",

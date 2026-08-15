@@ -49,7 +49,7 @@ export default async function CategoriaPage({ params }: CategoriaParams) {
   return (
     <Suspense
       fallback={
-        <div className="py-40 text-center font-serif text-2xl text-ink">
+        <div className="py-40 text-center font-serif text-2xl text-ivory">
           Carregando perfumes...
         </div>
       }

@@ -78,10 +78,10 @@ export default function ProductsClient({ categoria }: ProductsClientProps) {
         <div className="mx-auto max-w-7xl px-5 py-14 text-center lg:px-8">
           <Ornament className="mb-5" />
           <p className="eyebrow">Perfumaria Suanne</p>
-          <h1 className="mt-3 font-serif text-3xl text-ink sm:text-5xl">
+          <h1 className="mt-3 font-serif text-3xl text-ivory sm:text-5xl">
             {categoryLabel(normalizedCategory)}
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-ink-soft">
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-ivory-soft">
             Fragrâncias de luxo selecionadas para cada personalidade. Encontre
             a essência que fala por você.
           </p>
@@ -108,7 +108,7 @@ export default function ProductsClient({ categoria }: ProductsClientProps) {
                   className={`border px-4 py-2 text-xs uppercase tracking-[0.18em] transition-all duration-300 ${
                     active
                       ? "border-gold bg-gradient-to-b from-gold-light to-gold text-ivory shadow-[0_8px_20px_-8px_rgba(168,132,47,0.6)]"
-                      : "border-gold/40 text-ink-soft hover:border-gold hover:text-gold"
+                      : "border-gold/40 text-ivory-soft hover:border-gold hover:text-gold"
                   }`}
                 >
                   {cat} <span className="opacity-60">({count})</span>
@@ -131,7 +131,7 @@ export default function ProductsClient({ categoria }: ProductsClientProps) {
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-soft hover:text-ink"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-ivory-soft hover:text-ivory"
                   aria-label="Limpar busca"
                 >
                   <IconClose className="h-4 w-4" />
@@ -140,7 +140,7 @@ export default function ProductsClient({ categoria }: ProductsClientProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <span className="text-xs uppercase tracking-[0.2em] text-ink-soft">
+              <span className="text-xs uppercase tracking-[0.2em] text-ivory-soft">
                 {filtered.length} {filtered.length === 1 ? "perfume" : "perfumes"}
               </span>
               <select
@@ -161,10 +161,10 @@ export default function ProductsClient({ categoria }: ProductsClientProps) {
 
         {filtered.length === 0 ? (
           <div className="py-20 text-center">
-            <p className="font-serif text-2xl text-ink">
+            <p className="font-serif text-2xl text-ivory">
               Nenhum perfume encontrado
             </p>
-            <p className="mt-2 text-sm text-ink-soft">
+            <p className="mt-2 text-sm text-ivory-soft">
               Tente ajustar a busca ou escolha outra categoria.
             </p>
             <Link href="/produtos" className="btn-gold mt-6">

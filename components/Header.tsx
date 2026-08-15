@@ -52,11 +52,11 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="border-b border-gold/25 bg-ivory/95 backdrop-blur-md">
+      <div className="border-b border-gold/25 bg-ink/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5 lg:px-8">
           <div className="flex flex-1 items-center gap-4">
             <button
-              className="text-ink lg:hidden"
+              className="text-ivory lg:hidden"
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="Abrir menu"
             >
@@ -74,7 +74,7 @@ export default function Header() {
                   className={`link-line text-sm uppercase tracking-[0.2em] transition-colors hover:text-gold ${
                     isActive(link.href)
                       ? "text-gold after:w-full"
-                      : "text-ink"
+                      : "text-ivory"
                   }`}
                 >
                   {link.label}
@@ -92,7 +92,7 @@ export default function Header() {
               className="h-11 w-11 rounded-full object-cover"
             />
             <span className="text-left">
-              <span className="block font-serif text-xl leading-none tracking-wide text-ink sm:text-2xl">
+              <span className="block font-serif text-xl leading-none tracking-wide text-ivory sm:text-2xl">
                 Perfumaria <span className="gold-text">Suanne</span>
               </span>
               <span className="mt-1.5 hidden text-[10px] uppercase tracking-[0.45em] text-gold sm:block">
@@ -105,18 +105,18 @@ export default function Header() {
             <Link
               href="/produtos"
               aria-label="Buscar perfumes"
-              className="text-ink transition-colors hover:text-gold"
+              className="text-ivory transition-colors hover:text-gold"
             >
               <IconSearch className="h-5 w-5" />
             </Link>
             <button
               onClick={openCart}
               aria-label="Abrir carrinho"
-              className="relative text-ink transition-colors hover:text-gold"
+              className="relative text-ivory transition-colors hover:text-gold"
             >
               <IconCart className="h-5 w-5" />
               {count > 0 && (
-                <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[10px] font-semibold text-ivory">
+                <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[10px] font-semibold text-ink">
                   {count}
                 </span>
               )}
@@ -130,7 +130,7 @@ export default function Header() {
               {idx > 0 && <span className="text-[9px] text-gold">✦</span>}
               <Link
                 href={`/produtos/categoria/${cat.toLowerCase()}`}
-                className="text-xs uppercase tracking-[0.28em] text-ink-soft transition-colors hover:text-gold"
+                className="text-xs uppercase tracking-[0.28em] text-ivory-soft transition-colors hover:text-gold"
               >
                 {cat}
               </Link>
@@ -140,7 +140,7 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <div className="border-b border-gold/25 bg-ivory lg:hidden">
+        <div className="border-b border-gold/25 bg-surface lg:hidden">
           <nav className="flex flex-col px-6 py-4">
             {navLinks.map((link) => (
               <Link
@@ -148,7 +148,7 @@ export default function Header() {
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className={`border-b border-gold/15 py-3 text-sm uppercase tracking-[0.18em] ${
-                  isActive(link.href) ? "text-gold" : "text-ink"
+                  isActive(link.href) ? "text-gold" : "text-ivory"
                 }`}
               >
                 {link.label}

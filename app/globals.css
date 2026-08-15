@@ -1,19 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #f6f0e5;
-  --color-sand: #eee3cf;
-  --color-ivory: #fbf7ef;
-  --color-ink: #191310;
+  --color-cream: #1a1510;
+  --color-sand: #201a14;
+  --color-surface: #261e16;
+  --color-ivory: #f3ecdf;
+  --color-ivory-soft: #c9bda4;
+  --color-ink: #100c09;
   --color-ink-soft: #55483d;
-  --color-gold: #a8842f;
-  --color-gold-light: #c9a84e;
-  --color-gold-pale: #e7d7ae;
-  --color-wine: #5e2333;
+  --color-gold: #c9a84e;
+  --color-gold-light: #e2c87e;
+  --color-gold-pale: #eeddb0;
+  --color-wine: #d89aa6;
 
   --font-sans: var(--font-jost);
   --font-serif: var(--font-playfair);
   --font-display: var(--font-playfair);
+  --font-numeral: var(--font-cormorant);
 }
 
 html {
@@ -22,23 +25,23 @@ html {
 
 body {
   background:
-    radial-gradient(55rem 28rem at 50% -12%, rgba(201, 168, 78, 0.12), transparent 60%),
-    var(--color-ivory);
-  color: var(--color-ink);
+    radial-gradient(55rem 28rem at 50% -12%, rgba(201, 168, 78, 0.14), transparent 60%),
+    var(--color-ink);
+  color: var(--color-ivory);
   font-family: var(--font-sans);
   letter-spacing: 0.01em;
 }
 
 ::selection {
   background: var(--color-gold);
-  color: var(--color-ivory);
+  color: var(--color-ink);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-cream);
+  background: var(--color-ink);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-gold);
@@ -47,16 +50,16 @@ body {
 
 @layer components {
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 bg-gradient-to-b from-gold-light to-gold text-ivory uppercase tracking-[0.18em] text-sm px-8 py-4 shadow-[0_10px_25px_-10px_rgba(168,132,47,0.6)] transition-all duration-300 hover:bg-ink hover:bg-none hover:shadow-[0_14px_30px_-12px_rgba(25,19,16,0.5)];
+    @apply inline-flex items-center justify-center gap-2 bg-gradient-to-b from-gold-light to-gold text-ink uppercase tracking-[0.18em] text-sm px-8 py-4 shadow-[0_10px_25px_-10px_rgba(201,168,78,0.5)] transition-all duration-300 hover:bg-gold-light hover:bg-none hover:shadow-[0_14px_30px_-12px_rgba(201,168,78,0.6)];
   }
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 border border-gold text-gold uppercase tracking-[0.18em] text-sm px-8 py-4 transition-all duration-300 hover:bg-gold hover:text-ivory hover:shadow-[0_10px_25px_-10px_rgba(168,132,47,0.55)];
+    @apply inline-flex items-center justify-center gap-2 border border-gold text-gold uppercase tracking-[0.18em] text-sm px-8 py-4 transition-all duration-300 hover:bg-gold hover:text-ink hover:shadow-[0_10px_25px_-10px_rgba(201,168,78,0.55)];
   }
   .btn-dark {
-    @apply inline-flex items-center justify-center gap-2 bg-ink text-ivory uppercase tracking-[0.18em] text-sm px-8 py-4 transition-all duration-300 hover:bg-gold;
+    @apply inline-flex items-center justify-center gap-2 bg-ivory text-ink uppercase tracking-[0.18em] text-sm px-8 py-4 transition-all duration-300 hover:bg-gold;
   }
   .input-lux {
-    @apply w-full border border-gold/40 bg-transparent px-4 py-3 text-sm text-ink placeholder:text-ink-soft/60 outline-none transition-all duration-300 focus:border-gold focus:shadow-[0_0_0_3px_rgba(168,132,47,0.12)];
+    @apply w-full border border-gold/40 bg-transparent px-4 py-3 text-sm text-ivory placeholder:text-ivory-soft/60 outline-none transition-all duration-300 focus:border-gold focus:shadow-[0_0_0_3px_rgba(201,168,78,0.12)];
   }
   .link-line {
     @apply relative inline-block;
@@ -72,7 +75,7 @@ body {
     @apply text-gold uppercase tracking-[0.35em] text-xs font-medium;
   }
   .gold-text {
-    background: linear-gradient(120deg, #a8842f 0%, #e7d7ae 45%, #a8842f 80%);
+    background: linear-gradient(120deg, #c9a84e 0%, #eeddb0 45%, #c9a84e 80%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

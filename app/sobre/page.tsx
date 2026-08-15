@@ -23,7 +23,7 @@ export default function SobrePage() {
         <div className="mx-auto max-w-7xl px-5 py-16 text-center lg:px-8">
           <Ornament className="mb-5" />
           <p className="eyebrow">Nossa História</p>
-          <h1 className="mt-3 font-serif text-3xl text-ink sm:text-5xl">
+          <h1 className="mt-3 font-serif text-3xl text-ivory sm:text-5xl">
             Uma perfumaria com alma
           </h1>
         </div>
@@ -41,17 +41,17 @@ export default function SobrePage() {
             />
           </div>
           <div>
-            <h2 className="font-serif text-3xl leading-snug text-ink">
+            <h2 className="font-serif text-3xl leading-snug text-ivory">
               O perfume é a assinatura invisível de cada pessoa
             </h2>
-            <p className="mt-5 leading-relaxed text-ink-soft">
+            <p className="mt-5 leading-relaxed text-ivory-soft">
               A Perfumaria Suanne nasceu da paixão por essências raras e bem
               elaboradas. Começamos com uma pequena curadoria e hoje levamos
               fragrâncias de luxo para todo o Brasil, sempre com o mesmo
               cuidado: escolher cada frasco como se fosse um presente para
               alguém especial.
             </p>
-            <p className="mt-3 leading-relaxed text-ink-soft">
+            <p className="mt-3 leading-relaxed text-ivory-soft">
               Trabalhamos com importadores certificados, garantimos
               autenticidade e cuidamos de cada detalhe — da embalagem ao
               rastreio — para que a experiência de comprar seja tão
@@ -87,10 +87,10 @@ export default function SobrePage() {
           ].map((item) => (
             <div key={item.title} className="text-center">
               <item.icon className="mx-auto h-10 w-10 text-gold" />
-              <h3 className="mt-4 font-serif text-lg text-ink">
+              <h3 className="mt-4 font-serif text-lg text-ivory">
                 {item.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+              <p className="mt-2 text-sm leading-relaxed text-ivory-soft">
                 {item.text}
               </p>
             </div>
@@ -101,10 +101,10 @@ export default function SobrePage() {
       <section className="mx-auto max-w-3xl px-5 py-20 text-center lg:px-8">
         <Ornament className="mb-5" />
         <p className="eyebrow">Visite nossa coleção</p>
-        <h2 className="mt-2 font-serif text-3xl text-ink sm:text-4xl">
+        <h2 className="mt-2 font-serif text-3xl text-ivory sm:text-4xl">
           Deixe sua assinatura olfativa
         </h2>
-        <p className="mt-4 text-ink-soft">
+        <p className="mt-4 text-ivory-soft">
           Descubra os perfumes mais amados pelos nossos clientes.
         </p>
         <Link href="/produtos" className="btn-gold mt-8">

@@ -72,7 +72,7 @@ export default function HeroBanners() {
           <button
             onClick={() => goTo((active + categories.length - 1) % categories.length)}
             aria-label="Anterior"
-            className="flex h-11 w-11 items-center justify-center border border-gold/40 text-ivory transition-colors hover:bg-gold hover:text-ivory"
+            className="flex h-11 w-11 items-center justify-center border border-gold/40 text-ivory transition-colors hover:bg-gold hover:text-ink"
           >
             <IconChevronLeft className="h-4 w-4" />
           </button>
@@ -96,7 +96,7 @@ export default function HeroBanners() {
           <button
             onClick={() => goTo((active + 1) % categories.length)}
             aria-label="Próximo"
-            className="flex h-11 w-11 items-center justify-center border border-gold/40 text-ivory transition-colors hover:bg-gold hover:text-ivory"
+            className="flex h-11 w-11 items-center justify-center border border-gold/40 text-ivory transition-colors hover:bg-gold hover:text-ink"
           >
             <IconChevronRight className="h-4 w-4" />
           </button>

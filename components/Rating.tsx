@@ -20,7 +20,7 @@ export default function Rating({ rating, reviews, className }: Props) {
         ))}
       </div>
       {typeof reviews === "number" && (
-        <span className="text-xs text-ink-soft">({reviews})</span>
+        <span className="text-xs text-ivory-soft">({reviews})</span>
       )}
     </div>
   );

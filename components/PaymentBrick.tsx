@@ -156,25 +156,25 @@ export default function PaymentBrick({
   return (
     <div className="mx-auto max-w-xl">
       <div className="flex items-center justify-between">
-        <h3 className="font-serif text-xl text-ink">Pagamento</h3>
+        <h3 className="font-serif text-xl text-ivory">Pagamento</h3>
         <button
           type="button"
           onClick={onCancel}
-          className="text-sm text-ink-soft underline-offset-2 hover:text-ink hover:underline"
+          className="text-sm text-ivory-soft underline-offset-2 hover:text-ivory hover:underline"
         >
           ← Voltar aos dados
         </button>
       </div>
 
       {!ready && !error && (
-        <div className="mt-6 border border-gold/25 bg-cream px-6 py-8 text-center text-sm text-ink-soft">
+        <div className="mt-6 border border-gold/25 bg-cream px-6 py-8 text-center text-sm text-ivory-soft">
           Carregando formas de pagamento seguras…
         </div>
       )}
 
       {error && (
         <div className="mt-6 space-y-4">
-          <p className="border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <p className="border border-red-900/60 bg-red-950/40 px-4 py-3 text-sm text-red-300">
             {error}
           </p>
           <button type="button" onClick={onCancel} className="btn-gold">
@@ -188,7 +188,7 @@ export default function PaymentBrick({
         className={`mt-6 ${error || !ready ? "hidden" : ""}`}
       />
 
-      <p className="mt-6 text-xs leading-relaxed text-ink-soft">
+      <p className="mt-6 text-xs leading-relaxed text-ivory-soft">
         Ambiente seguro: seus dados de pagamento são processados diretamente
         pelo Mercado Pago. Aceitamos Pix e cartões de crédito e débito.
       </p>

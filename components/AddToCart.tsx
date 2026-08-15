@@ -29,30 +29,33 @@ export default function AddToCart({ product }: { product: Product }) {
   return (
     <div className="mt-8">
       <div className="flex flex-wrap items-stretch gap-3">
-        <div className="flex items-center border border-gold/40 bg-ivory">
+        <div className="flex items-center border border-gold/40 bg-surface">
           <button
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             aria-label="Diminuir quantidade"
-            className="px-4 py-4 text-ink transition-colors hover:text-gold"
+            className="px-4 py-4 text-ivory transition-colors hover:text-gold"
           >
             <IconMinus className="h-4 w-4" />
           </button>
-          <span className="w-10 text-center font-serif text-lg text-ink">
+          <span className="w-10 text-center font-serif text-lg text-ivory">
             {qty}
           </span>
           <button
             onClick={() => setQty((q) => Math.min(10, q + 1))}
             aria-label="Aumentar quantidade"
-            className="px-4 py-4 text-ink transition-colors hover:text-gold"
+            className="px-4 py-4 text-ivory transition-colors hover:text-gold"
           >
             <IconPlus className="h-4 w-4" />
           </button>
         </div>
         <button onClick={handleAdd} className="btn-gold flex-1">
-          Adicionar ao Carrinho · {formatBRL(product.price * qty)}
+          Adicionar ao Carrinho ·{" "}
+          <span className="font-numeral text-base">
+            {formatBRL(product.price * qty)}
+          </span>
         </button>
       </div>
-      <p className="mt-3 text-xs text-ink-soft">
+      <p className="mt-3 text-xs text-ivory-soft">
         Compra segura · Enviamos para todo o Brasil
       </p>
     </div>

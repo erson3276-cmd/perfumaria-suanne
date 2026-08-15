@@ -271,10 +271,10 @@ export default function CheckoutPage() {
   if (lines.length === 0 && step !== "paid") {
     return (
       <div className="mx-auto max-w-2xl px-5 py-28 text-center">
-        <p className="font-serif text-3xl text-ink">
+        <p className="font-serif text-3xl text-ivory">
           Nenhum item para finalizar
         </p>
-        <p className="mt-3 text-ink-soft">
+        <p className="mt-3 text-ivory-soft">
           Adicione perfumes ao carrinho antes de finalizar a compra.
         </p>
         <Link href="/produtos" className="btn-gold mt-8">
@@ -287,42 +287,42 @@ export default function CheckoutPage() {
   if (step === "paid") {
     return (
       <div className="mx-auto max-w-2xl px-5 py-16 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-2xl text-green-700">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-950/60 text-2xl text-emerald-300">
           ✓
         </div>
-        <h1 className="mt-6 font-serif text-3xl text-ink sm:text-4xl">
+        <h1 className="mt-6 font-serif text-3xl text-ivory sm:text-4xl">
           {paidStatus === "pending"
             ? "Pagamento pendente"
             : "Pagamento aprovado!"}
         </h1>
-        <p className="mx-auto mt-3 max-w-lg text-ink-soft">
+        <p className="mx-auto mt-3 max-w-lg text-ivory-soft">
           {paidStatus === "pending"
             ? "Recebemos sua solicitação de pagamento. Assim que o pagamento for confirmado, envie seus dados no WhatsApp para combinarmos a entrega."
             : "Recebemos seu pagamento com sucesso. Envie o resumo do pedido no nosso WhatsApp para confirmarmos os dados e o frete."}
         </p>
 
         {paymentId && (
-          <p className="mt-3 text-sm text-ink-soft">
-            Pagamento <span className="font-semibold text-ink">#{paymentId}</span>
+          <p className="mt-3 text-sm text-ivory-soft">
+            Pagamento <span className="font-semibold text-ivory">#{paymentId}</span>
           </p>
         )}
 
         {snapshot && (
           <div className="mt-8 border border-gold/30 bg-cream p-6 text-left">
-            <h2 className="font-serif text-xl text-ink">Resumo do Pedido</h2>
+            <h2 className="font-serif text-xl text-ivory">Resumo do Pedido</h2>
             <ul className="mt-4 space-y-2 text-sm">
               {snapshot.items.map((it, idx) => (
                 <li key={idx} className="flex justify-between gap-3">
-                  <span className="text-ink-soft">
-                    {it.qty}x <span className="text-ink">{it.name}</span>
+                  <span className="text-ivory-soft">
+                    {it.qty}x <span className="text-ivory">{it.name}</span>
                   </span>
-                  <span className="text-ink">
+                  <span className="text-ivory">
                     {formatBRL(it.price * it.qty)}
                   </span>
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex justify-between border-t border-gold/25 pt-3 font-serif text-lg text-ink">
+            <div className="mt-4 flex justify-between border-t border-gold/25 pt-3 font-numeral text-lg text-ivory">
               <span>Total</span>
               <span>
                 {formatBRL(
@@ -370,7 +370,7 @@ export default function CheckoutPage() {
     return (
       <div className="mx-auto max-w-7xl px-5 py-14 lg:px-8">
         <p className="eyebrow">Perfumaria Suanne</p>
-        <h1 className="mt-2 font-serif text-3xl text-ink sm:text-5xl">
+        <h1 className="mt-2 font-serif text-3xl text-ivory sm:text-5xl">
           Pagamento
         </h1>
         <PaymentBrick
@@ -405,7 +405,7 @@ export default function CheckoutPage() {
   return (
     <div className="mx-auto max-w-7xl px-5 py-14 lg:px-8">
       <p className="eyebrow">Perfumaria Suanne</p>
-      <h1 className="mt-2 font-serif text-3xl text-ink sm:text-5xl">
+      <h1 className="mt-2 font-serif text-3xl text-ivory sm:text-5xl">
         Finalizar Compra
       </h1>
 
@@ -415,7 +415,7 @@ export default function CheckoutPage() {
       >
         <div className="space-y-10">
           <fieldset>
-            <legend className="mb-4 font-serif text-xl text-ink">
+            <legend className="mb-4 font-serif text-xl text-ivory">
               1. Dados Pessoais
             </legend>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -446,7 +446,7 @@ export default function CheckoutPage() {
           </fieldset>
 
           <fieldset>
-            <legend className="mb-4 font-serif text-xl text-ink">
+            <legend className="mb-4 font-serif text-xl text-ivory">
               2. Entrega
             </legend>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -483,12 +483,12 @@ export default function CheckoutPage() {
           </fieldset>
 
           <fieldset>
-            <legend className="mb-4 font-serif text-xl text-ink">
+            <legend className="mb-4 font-serif text-xl text-ivory">
               3. Pagamento
             </legend>
-            <p className="text-sm leading-relaxed text-ink-soft">
+            <p className="text-sm leading-relaxed text-ivory-soft">
               Na próxima etapa você poderá pagar com{" "}
-              <strong className="text-ink">Pix</strong>, cartão de crédito ou
+              <strong className="text-ivory">Pix</strong>, cartão de crédito ou
               débito, de forma segura pelo Mercado Pago. Também aceitamos
               pedidos pelo WhatsApp.
             </p>
@@ -503,42 +503,42 @@ export default function CheckoutPage() {
         </div>
 
         <aside className="h-fit border border-gold/30 bg-cream p-7 lg:sticky lg:top-36">
-          <h2 className="font-serif text-xl text-ink">Seu Pedido</h2>
+          <h2 className="font-serif text-xl text-ivory">Seu Pedido</h2>
           <ul className="mt-5 space-y-3">
             {lines.map(({ product, qty }) => (
               <li
                 key={product.slug}
                 className="flex items-center justify-between gap-3 text-sm"
               >
-                <span className="flex-1 truncate text-ink-soft">
-                  {qty}x <span className="text-ink">{product.name}</span>
+                <span className="flex-1 truncate text-ivory-soft">
+                  {qty}x <span className="text-ivory">{product.name}</span>
                 </span>
-                <span className="text-ink">
+                <span className="text-ivory">
                   {formatBRL(product.price * qty)}
                 </span>
               </li>
             ))}
           </ul>
           <dl className="mt-5 space-y-3 border-t border-gold/25 pt-4 text-sm">
-            <div className="flex justify-between text-ink-soft">
+            <div className="flex justify-between text-ivory-soft">
               <dt>Subtotal</dt>
               <dd>{formatBRL(subtotal)}</dd>
             </div>
-            <div className="flex justify-between text-ink-soft">
+            <div className="flex justify-between text-ivory-soft">
               <dt>Frete</dt>
               <dd>{shipping.free ? "Grátis" : formatBRL(shipping.fee)}</dd>
             </div>
-            <div className="flex justify-between text-ink">
+            <div className="flex justify-between text-ivory">
               <dt className="font-semibold uppercase tracking-[0.15em]">
                 Total
               </dt>
-              <dd className="font-serif text-2xl">
+              <dd className="font-numeral text-2xl">
                 {formatBRL(subtotal + shipping.fee)}
               </dd>
             </div>
           </dl>
           <FreteCalculator className="mt-5" value={subtotal} />
-          <ul className="mt-5 space-y-2 text-xs leading-relaxed text-ink-soft">
+          <ul className="mt-5 space-y-2 text-xs leading-relaxed text-ivory-soft">
             {shippingLines.map((line) => (
               <li key={line} className="flex gap-2">
                 <span className="text-gold">✦</span>
@@ -548,7 +548,7 @@ export default function CheckoutPage() {
           </ul>
 
           {error && (
-            <p className="mt-4 border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+            <p className="mt-4 border border-red-900/60 bg-red-950/40 px-3 py-2 text-xs text-red-300">
               {error}
             </p>
           )}
@@ -567,7 +567,7 @@ export default function CheckoutPage() {
             Enviar Pedido no WhatsApp
           </button>
 
-          <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-ink-soft">
+          <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-ivory-soft">
             <IconShield className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
             Pagamento seguro e processado pelo Mercado Pago. Se preferir, seu
             pedido também pode ser confirmado pelo WhatsApp.

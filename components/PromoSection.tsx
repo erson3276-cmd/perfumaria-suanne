@@ -26,11 +26,11 @@ export default function PromoSection({
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="eyebrow">{eyebrow}</p>
-            <h2 className="mt-2 font-serif text-2xl text-ink sm:text-3xl">
+            <h2 className="mt-2 font-serif text-2xl text-ivory sm:text-3xl">
               <span className="mr-2">{emoji}</span>
               {title}
             </h2>
-            <p className="mt-1 text-sm text-ink-soft">{subtitle}</p>
+            <p className="mt-1 text-sm text-ivory-soft">{subtitle}</p>
           </div>
           <Link
             href={href}

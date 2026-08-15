@@ -24,10 +24,10 @@ export default function ProductCardPromo({
   const parcel = product.price / 10;
 
   return (
-    <article className="group flex h-full flex-col bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-22px_rgba(25,19,16,0.35)]">
+    <article className="group flex h-full flex-col bg-surface transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-22px_rgba(0,0,0,0.6)]">
       <Link
         href={`/produtos/${product.slug}`}
-        className="relative block aspect-square overflow-hidden bg-white"
+        className="relative block aspect-square overflow-hidden bg-ink"
       >
         <ProductImage
           src={product.image}
@@ -54,24 +54,24 @@ export default function ProductCardPromo({
 
       <div className="flex flex-1 flex-col border-t border-gold/15 p-3 sm:p-4">
         <Link href={`/produtos/${product.slug}`}>
-          <h3 className="line-clamp-2 min-h-[2.6em] font-serif text-sm leading-snug text-ink transition-colors hover:text-gold">
+          <h3 className="line-clamp-2 min-h-[2.6em] font-serif text-sm leading-snug text-ivory transition-colors hover:text-gold">
             {product.name}
           </h3>
         </Link>
 
         <div className="mt-2">
           <p className="flex flex-wrap items-baseline gap-x-2">
-            <span className="font-serif text-lg font-semibold text-ink">
+            <span className="font-numeral text-lg font-semibold text-ivory">
               {formatBRL(pix)}
             </span>
-            <span className="text-[11px] text-ink-soft">no pix</span>
+            <span className="text-[11px] text-ivory-soft">no pix</span>
             {hasDiscount && (
-              <span className="text-xs text-ink-soft/60 line-through">
+              <span className="text-xs text-ivory-soft/60 line-through">
                 {formatBRL(product.originalPrice!)}
               </span>
             )}
           </p>
-          <p className="mt-1 text-[11px] leading-snug text-ink-soft">
+          <p className="mt-1 text-[11px] leading-snug text-ivory-soft">
             em até <strong>10x de {formatBRL(parcel)}</strong> sem juros
           </p>
         </div>
@@ -82,8 +82,8 @@ export default function ProductCardPromo({
           disabled={!product.inStock}
           className={`mt-auto w-full border py-2.5 text-[10px] uppercase tracking-[0.2em] transition-all duration-300 ${
             product.inStock
-              ? "border-ink/15 text-ink hover:border-gold hover:bg-gold hover:text-ivory"
-              : "cursor-not-allowed border-ink-soft/20 text-ink-soft/40"
+              ? "border-ivory/25 text-ivory hover:border-gold hover:bg-gold hover:text-ink"
+              : "cursor-not-allowed border-ivory-soft/20 text-ivory-soft/40"
           }`}
         >
           {product.inStock ? "Comprar" : "Esgotado"}

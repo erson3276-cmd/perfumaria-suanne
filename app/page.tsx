@@ -15,7 +15,6 @@ import {
   IconArrowRight,
   IconGift,
   IconShield,
-  IconSpray,
   IconTruck,
   IconWhatsapp,
 } from "@/components/icons";
@@ -47,11 +46,6 @@ const trustItems = [
     icon: IconGift,
     title: "Embalagem Presente",
     text: "Aperfeiçoada para presentear",
-  },
-  {
-    icon: IconSpray,
-    title: "Amostras",
-    text: "Miniaturas acompanham o pedido",
   },
 ];
 
@@ -92,10 +86,10 @@ export default function HomePage() {
                 <item.icon className="h-6 w-6" />
               </span>
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ink">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ivory">
                   {item.title}
                 </p>
-                <p className="mt-1 text-xs text-ink-soft">{item.text}</p>
+                <p className="mt-1 text-xs text-ivory-soft">{item.text}</p>
               </div>
             </div>
           ))}
@@ -106,7 +100,7 @@ export default function HomePage() {
         <div className="mb-12 text-center">
           <Ornament className="mb-5" />
           <p className="eyebrow">Curadoria Exclusiva</p>
-          <h2 className="mt-3 font-serif text-3xl text-ink sm:text-4xl">
+          <h2 className="mt-3 font-serif text-3xl text-ivory sm:text-4xl">
             Os Favoritos da Suanne
           </h2>
           <Link
@@ -130,7 +124,7 @@ export default function HomePage() {
           <div className="mb-12 text-center">
             <Ornament className="mb-5" />
             <p className="eyebrow">Encontre sua Essência</p>
-            <h2 className="mt-3 font-serif text-3xl text-ink sm:text-4xl">
+            <h2 className="mt-3 font-serif text-3xl text-ivory sm:text-4xl">
               Nossas Coleções
             </h2>
           </div>
@@ -183,16 +177,16 @@ export default function HomePage() {
           <div>
             <Ornament className="mb-6 justify-start" />
             <p className="eyebrow">Nossa História</p>
-            <h2 className="mt-3 font-serif text-3xl leading-snug text-ink sm:text-4xl">
+            <h2 className="mt-3 font-serif text-3xl leading-snug text-ivory sm:text-4xl">
               Uma curadoria feita com{" "}
               <span className="gold-text italic">amor</span> e bom gosto
             </h2>
-            <p className="mt-5 leading-relaxed text-ink-soft">
+            <p className="mt-5 leading-relaxed text-ivory-soft">
               Cada frasco é selecionado a dedo por nossa equipe. Buscamos
               fragrâncias que contam histórias, que marcam presença e que se
               tornam parte da sua identidade.
             </p>
-            <p className="mt-3 leading-relaxed text-ink-soft">
+            <p className="mt-3 leading-relaxed text-ivory-soft">
               Trabalhamos com importadores certificados e garantimos a
               autenticidade de cada essência. Do ateliê até a sua porta.
             </p>
@@ -208,7 +202,7 @@ export default function HomePage() {
           <div className="mb-12 text-center">
             <Ornament className="mb-5" />
             <p className="eyebrow">Quem Compra, Recomenda</p>
-            <h2 className="mt-3 font-serif text-3xl text-ink sm:text-4xl">
+            <h2 className="mt-3 font-serif text-3xl text-ivory sm:text-4xl">
               Depoimentos
             </h2>
           </div>
@@ -216,19 +210,19 @@ export default function HomePage() {
             {testimonials.map((t) => (
               <blockquote
                 key={t.name}
-                className="relative flex flex-col border border-gold/25 bg-ivory p-8 transition-shadow duration-300 hover:shadow-[0_20px_40px_-20px_rgba(168,132,47,0.35)]"
+                className="relative flex flex-col border border-gold/25 bg-surface p-8 transition-shadow duration-300 hover:shadow-[0_20px_40px_-20px_rgba(168,132,47,0.35)]"
               >
                 <span className="absolute -top-5 left-7 flex h-10 w-10 items-center justify-center bg-gold font-serif text-2xl leading-none text-ivory">
                   “
                 </span>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-soft">
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-ivory-soft">
                   {t.text}
                 </p>
                 <footer className="mt-6 flex items-center gap-3 border-t border-gold/15 pt-5">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 font-serif text-gold">
                     {t.name[0]}
                   </span>
-                  <span className="text-sm uppercase tracking-[0.18em] text-ink">
+                  <span className="text-sm uppercase tracking-[0.18em] text-ivory">
                     {t.name}
                   </span>
                   <span className="ml-auto text-xs text-gold">★★★★★</span>

@@ -146,7 +146,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
         }}
       />
       <div className="mx-auto max-w-7xl px-5 py-6 lg:px-8">
-        <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.15em] text-ink-soft">
+        <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.15em] text-ivory-soft">
           <Link href="/" className="transition-colors hover:text-gold">
             Início
           </Link>
@@ -162,13 +162,13 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
             {product.category}
           </Link>
           <IconChevronRight className="h-3 w-3" />
-          <span className="text-ink">{product.name}</span>
+          <span className="text-ivory">{product.name}</span>
         </nav>
       </div>
 
       <section className="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="relative aspect-[4/5] overflow-hidden border border-gold/20 bg-white">
+          <div className="relative aspect-[4/5] overflow-hidden border border-gold/20 bg-ink">
             <ProductImage
               src={product.image}
               alt={product.name}
@@ -176,7 +176,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-contain"
             />
-            <span className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-ink/5" />
+            <span className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-gold/15" />
             {product.badge && (
               <span className="absolute left-0 top-0 bg-gradient-to-r from-ink to-ink/90 px-4 py-2 text-[11px] uppercase tracking-[0.25em] text-gold-pale">
                 {product.badge}
@@ -186,12 +186,12 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
 
           <div className="flex flex-col">
             <p className="eyebrow">{product.brand}</p>
-            <h1 className="mt-2 font-serif text-3xl leading-tight text-ink sm:text-5xl">
+            <h1 className="mt-2 font-serif text-3xl leading-tight text-ivory sm:text-5xl">
               {product.name}
             </h1>
             <div className="mt-3 flex items-center gap-4">
               <Rating rating={product.rating} reviews={product.reviews} />
-              <span className="text-xs text-ink-soft">
+              <span className="text-xs text-ivory-soft">
                 {product.size} · {product.category}
               </span>
             </div>
@@ -199,10 +199,10 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
             <div className="mt-6 flex flex-wrap items-baseline gap-3">
               {hasDiscount && (
                 <>
-                  <span className="font-serif text-2xl text-gold">
+                  <span className="font-numeral text-2xl text-gold">
                     {formatBRL(product.price)}
                   </span>
-                  <span className="text-sm text-ink-soft line-through">
+                  <span className="text-sm text-ivory-soft line-through">
                     {formatBRL(product.originalPrice!)}
                   </span>
                   <span className="bg-wine/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-wine">
@@ -211,27 +211,27 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
                 </>
               )}
               {!hasDiscount && (
-                <span className="font-serif text-2xl text-ink">
+                <span className="font-numeral text-2xl text-ivory">
                   {formatBRL(product.price)}
                 </span>
               )}
             </div>
-            <p className="mt-1 text-xs text-ink-soft">
+            <p className="mt-1 text-xs text-ivory-soft">
               até 3x de{" "}
               {formatBRL(product.price / 3)} sem juros no cartão
             </p>
 
-            <p className="mt-6 leading-relaxed text-ink-soft">
+            <p className="mt-6 leading-relaxed text-ivory-soft">
               {product.description}
             </p>
 
             <div className="mt-6 border-l-2 border-gold/50 bg-cream/70 px-4 py-3">
-              <p className="text-sm text-ink">
+              <p className="text-sm text-ivory">
                 <span className="font-semibold text-gold">{weeklyBuyers}</span>{" "}
                 clientes escolheram esta fragrância esta semana
               </p>
               {lowStock && (
-                <p className="mt-1 text-sm text-ink-soft">
+                <p className="mt-1 text-sm text-ivory-soft">
                   Restam poucas unidades — quando esgotar, a reposição pode
                   demorar semanas.
                 </p>
@@ -250,7 +250,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
               ].map((item) => (
                 <div key={item.label} className="flex flex-col items-center gap-2">
                   <item.icon className="h-6 w-6 text-gold" />
-                  <span className="text-[11px] uppercase tracking-[0.12em] text-ink-soft">
+                  <span className="text-[11px] uppercase tracking-[0.12em] text-ivory-soft">
                     {item.label}
                   </span>
                 </div>
@@ -263,7 +263,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-gold hover:text-ink"
+              className="mt-5 inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-gold hover:text-ivory"
             >
               <IconWhatsapp className="h-4 w-4" />
               Dúvidas? Fale com a gente
@@ -277,7 +277,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
           <div>
             <Ornament className="mb-6 justify-start" />
             <p className="eyebrow">Pirâmide Olfativa</p>
-            <h2 className="mt-2 font-serif text-2xl text-ink">
+            <h2 className="mt-2 font-serif text-2xl text-ivory">
               A composição da fragrância
             </h2>
             <div className="mt-6 grid grid-cols-3 gap-4">
@@ -289,10 +289,10 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
           <div>
             <Ornament className="mb-6 justify-start" />
             <p className="eyebrow">Entrega & Pagamento</p>
-            <h2 className="mt-2 font-serif text-2xl text-ink">
+            <h2 className="mt-2 font-serif text-2xl text-ivory">
               Compra tranquila
             </h2>
-            <ul className="mt-6 space-y-4 text-sm text-ink-soft">
+            <ul className="mt-6 space-y-4 text-sm text-ivory-soft">
               <li className="flex gap-3">
                 <IconTruck className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
                 <span>
@@ -324,7 +324,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
         <div className="mb-10 text-center">
           <Ornament className="mb-5" />
           <p className="eyebrow">Você também pode gostar</p>
-          <h2 className="mt-2 font-serif text-2xl text-ink sm:text-3xl">
+          <h2 className="mt-2 font-serif text-2xl text-ivory sm:text-3xl">
             Sugestões para você
           </h2>
         </div>
@@ -340,13 +340,13 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
 
 function NoteColumn({ title, notes }: { title: string; notes: string[] }) {
   return (
-    <div className="border border-gold/25 bg-ivory p-4 text-center">
+    <div className="border border-gold/25 bg-surface p-4 text-center">
       <p className="mb-3 text-[11px] uppercase tracking-[0.25em] text-gold">
         {title}
       </p>
       <ul className="space-y-1.5">
         {notes.map((note) => (
-          <li key={note} className="text-sm text-ink-soft">
+          <li key={note} className="text-sm text-ivory-soft">
             {note}
           </li>
         ))}

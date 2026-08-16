@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
         "Content-Type": "application/json",
+        "X-Idempotency-Key": crypto.randomUUID(),
       },
       body: JSON.stringify(payload),
     });

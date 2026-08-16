@@ -90,6 +90,14 @@ export default function PaymentBrick({
             preferenceId,
           },
           customization: {
+            paymentMethods: {
+              ticket: "all",
+              bankTransfer: "all",
+              creditCard: "all",
+              debitCard: "all",
+              prepaidCard: "all",
+              mercadoPago: "all",
+            },
             visual: { style: { theme: "default", verticalPadding: "16px" } },
           },
           callbacks: {

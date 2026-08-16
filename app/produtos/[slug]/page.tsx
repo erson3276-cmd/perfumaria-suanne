@@ -199,7 +199,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
             <div className="mt-6 flex flex-wrap items-baseline gap-3">
               {hasDiscount && (
                 <>
-                  <span className="font-numeral text-2xl text-gold">
+                  <span className="font-serif text-2xl text-gold">
                     {formatBRL(product.price)}
                   </span>
                   <span className="text-sm text-ivory-soft line-through">
@@ -211,7 +211,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
                 </>
               )}
               {!hasDiscount && (
-                <span className="font-numeral text-2xl text-ivory">
+                <span className="font-serif text-2xl text-ivory">
                   {formatBRL(product.price)}
                 </span>
               )}

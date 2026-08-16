@@ -322,7 +322,7 @@ export default function CheckoutPage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex justify-between border-t border-gold/25 pt-3 font-numeral text-lg text-ivory">
+            <div className="mt-4 flex justify-between border-t border-gold/25 pt-3 font-serif text-lg text-ivory">
               <span>Total</span>
               <span>
                 {formatBRL(
@@ -532,7 +532,7 @@ export default function CheckoutPage() {
               <dt className="font-semibold uppercase tracking-[0.15em]">
                 Total
               </dt>
-              <dd className="font-numeral text-2xl">
+              <dd className="font-serif text-2xl">
                 {formatBRL(subtotal + shipping.fee)}
               </dd>
             </div>

@@ -61,7 +61,7 @@ export default function ProductCardPromo({
 
         <div className="mt-2">
           <p className="flex flex-wrap items-baseline gap-x-2">
-            <span className="font-numeral text-lg font-semibold text-ivory">
+            <span className="font-serif text-lg font-semibold text-ivory">
               {formatBRL(pix)}
             </span>
             <span className="text-[11px] text-ivory-soft">no pix</span>

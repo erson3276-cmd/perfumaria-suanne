@@ -112,7 +112,7 @@ export default function CartDrawer() {
                           </button>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="font-numeral text-ivory">
+                          <span className="font-serif text-ivory">
                             {formatBRL(product.price * qty)}
                           </span>
                           <button
@@ -135,7 +135,7 @@ export default function CartDrawer() {
                 <span className="text-sm uppercase tracking-[0.2em] text-ivory-soft">
                   Subtotal
                 </span>
-                <span className="font-numeral text-2xl text-ivory">
+                <span className="font-serif text-2xl text-ivory">
                   {formatBRL(subtotal)}
                 </span>
               </div>

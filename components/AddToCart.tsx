@@ -50,7 +50,7 @@ export default function AddToCart({ product }: { product: Product }) {
         </div>
         <button onClick={handleAdd} className="btn-gold flex-1">
           Adicionar ao Carrinho ·{" "}
-          <span className="font-numeral text-base">
+          <span className="font-serif text-base">
             {formatBRL(product.price * qty)}
           </span>
         </button>

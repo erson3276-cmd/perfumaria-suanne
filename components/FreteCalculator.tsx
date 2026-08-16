@@ -27,7 +27,7 @@ export default function FreteCalculator({
         <div className="mt-3">
           <p className="text-sm text-ivory">
             Frete fixo de{" "}
-            <span className="font-numeral text-base">{formatBRL(fee)}</span>{" "}
+            <span className="font-serif text-base">{formatBRL(fee)}</span>{" "}
             para todo o Brasil.
           </p>
           <p className="mt-2 text-xs text-ivory-soft">

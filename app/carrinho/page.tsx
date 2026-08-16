@@ -91,7 +91,7 @@ export default function CartPage() {
                       </button>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="font-numeral text-lg text-ivory">
+                      <span className="font-serif text-lg text-ivory">
                         {formatBRL(product.price * qty)}
                       </span>
                       <button
@@ -130,7 +130,7 @@ export default function CartPage() {
               <dt className="font-semibold uppercase tracking-[0.15em]">
                 Total
               </dt>
-              <dd className="font-numeral text-2xl">
+              <dd className="font-serif text-2xl">
                 {formatBRL(subtotal + shipping.fee)}
               </dd>
             </div>

@@ -16,7 +16,6 @@
   --font-sans: var(--font-jost);
   --font-serif: var(--font-playfair);
   --font-display: var(--font-playfair);
-  --font-numeral: var(--font-cormorant);
 }
 
 html {
@@ -79,6 +78,22 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+  .gold-metallic {
+    background: linear-gradient(
+      180deg,
+      #f6e8be 0%,
+      #e2c87e 28%,
+      #c9a84e 48%,
+      #a17f2f 62%,
+      #eeddb0 84%,
+      #c9a84e 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 2px rgba(16, 12, 9, 0.85))
+      drop-shadow(0 0 22px rgba(201, 168, 78, 0.3));
   }
 }
 

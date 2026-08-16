@@ -55,7 +55,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 {formatBRL(product.originalPrice!)}
               </span>
             )}
-            <span className="font-numeral text-xl text-ivory">
+            <span className="font-serif text-xl text-ivory">
               {formatBRL(product.price)}
             </span>
           </div>

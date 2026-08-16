@@ -36,6 +36,7 @@ declare global {
 type PaymentBrickProps = {
   preferenceId: string;
   amount: number;
+  payerEmail?: string;
   onApproved: (payment: MPPayment) => void;
   onCancel: () => void;
 };
@@ -43,6 +44,7 @@ type PaymentBrickProps = {
 export default function PaymentBrick({
   preferenceId,
   amount,
+  payerEmail,
   onApproved,
   onCancel,
 }: PaymentBrickProps) {
@@ -88,6 +90,9 @@ export default function PaymentBrick({
           initialization: {
             amount,
             preferenceId,
+            payer: {
+              email: payerEmail ?? "",
+            },
           },
           customization: {
             paymentMethods: {

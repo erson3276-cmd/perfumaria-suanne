@@ -376,6 +376,7 @@ export default function CheckoutPage() {
         <PaymentBrick
           preferenceId={preference.id}
           amount={preference.amount}
+          payerEmail={snapshot?.customer.email || form.email}
           onApproved={(payment) => {
             setPaymentId(String(payment.id));
             setPaidStatus("approved");

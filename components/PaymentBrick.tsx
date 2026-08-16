@@ -12,6 +12,8 @@ type PaymentBrickInstance = {
   unmount: () => void;
 };
 
+const BRICK_CONTAINER_ID = "payment-brick-container";
+
 type MercadoPagoConstructor = new (
   publicKey: string,
   options?: { locale?: string }
@@ -19,7 +21,7 @@ type MercadoPagoConstructor = new (
   bricks: () => Promise<{
     create: (
       kind: "payment",
-      container: HTMLElement,
+      container: string,
       settings: Record<string, unknown>
     ) => Promise<PaymentBrickInstance>;
   }>;
@@ -82,7 +84,7 @@ export default function PaymentBrick({
         const mp = new window.MercadoPago(publicKey, { locale: "pt-BR" });
 
         const bricks = await mp.bricks();
-        const instance = await bricks.create("payment", containerRef.current, {
+        const instance = await bricks.create("payment", BRICK_CONTAINER_ID, {
           initialization: {
             amount,
             preferenceId,
@@ -133,8 +135,9 @@ export default function PaymentBrick({
           return;
         }
         instanceRef.current = instance;
-      } catch {
+      } catch (err) {
         if (!cancelled) {
+          console.error("PaymentBrick init error:", err);
           setError("Não foi possível iniciar o pagamento. Tente novamente.");
         }
       }
@@ -185,6 +188,7 @@ export default function PaymentBrick({
 
       <div
         ref={containerRef}
+        id={BRICK_CONTAINER_ID}
         className={`mt-6 ${error || !ready ? "hidden" : ""}`}
       />
 

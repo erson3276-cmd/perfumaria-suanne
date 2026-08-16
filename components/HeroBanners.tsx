@@ -8,8 +8,10 @@ import {
 } from "@/components/icons";
 
 const banners = [
-  { key: "Masculino", src: "/banners/banner-masculino.jpg", alt: "Banner Top 5 Masculino" },
-  { key: "Feminino", src: "/banners/banner-feminino.jpg", alt: "Banner Top 5 Feminino" },
+  { key: "1", src: "/banners/banner-1.jpg", alt: "Banner 1" },
+  { key: "2", src: "/banners/banner-2.jpg", alt: "Banner 2" },
+  { key: "3", src: "/banners/banner-3.jpg", alt: "Banner 3" },
+  { key: "4", src: "/banners/banner-4.jpg", alt: "Banner 4" },
 ] as const;
 
 export default function HeroBanners() {

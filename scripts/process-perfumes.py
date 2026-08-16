@@ -1,27 +1,29 @@
 """Padrão de imagens da Perfumaria Suanne.
 
-Mantém o mesmo fundo (balcão de perfumaria, escuro + dourado, no estilo da logo)
+Mantém o mesmo fundo (Fundo padrão.jpg - balcão de perfumaria escuro + dourado)
 para todas as imagens de produto. O perfume em si NÃO é alterado: apenas o
-fundo é removido (rembg) e o frasco é composto sobre o fundo padrão.
+fundo é removido (rembg ou cutout pronto) e o frasco é composto sobre o fundo
+padrão, no mesmo estilo das imagens de referência (frasco grande, centralizado,
+base apoiada na parte inferior do canvas).
 
 Como usar (adicionar um novo perfume):
     1. Coloque a foto do perfume em public/perfumes/<slug>.<ext> (qualquer formato).
     2. Rode o script:
-       python scripts/process-perfumes.py [diretorio_opcional]
+       python scripts/process-perfumes.py
     3. A imagem será regravada no mesmo caminho com o fundo padrão.
-    (Se informar um diretório, processa os arquivos dele em vez do padrão.)
 
 Requisitos (primeira vez):
     pip install rembg onnxruntime pillow numpy
 
 Detalhes do padrão:
-    - Canvas: 1600x1600 (square).
-    - Fundo: parede escura com brilho dourado, balcão na parte inferior e
-      filete dourado, refletindo a paleta da logo (preto-esverdeado + dourado).
-    - O frasco é centralizado, ocupa ~76% da altura e "assenta" sobre o balcão,
-      com sombra projetada para dar profundidade.
-    - Imagens que já possuem transparência real nos cantos são usadas como
-      estão (sem passar pelo rembg), preservando o corte original.
+    - Canvas: 1600x1600 (square), fundo = Fundo padrão.jpg (upscaled).
+    - O frasco é centralizado, ocupa ~70% da altura e a base fica em ~95% da
+      altura do canvas, com sombra projetada para dar profundidade.
+    - Se existir um cutout em public/perfumes/cutouts/<slug>.png, ele é usado
+      (mais limpo). Caso contrário usa rembg. Imagens que já possuem
+      transparência real nos cantos são usadas como estão.
+    - As imagens de referência (amber-rouge.png, ana-abiyedh-rouge.png,
+      asad.jpg e afeef.png) já estão prontas e não são reprocessadas.
 """
 
 import glob
@@ -33,54 +35,16 @@ from PIL import Image, ImageFilter, ImageDraw, ImageOps, ImageChops
 CANVAS = 1600
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PERFUMES_DIR = os.path.join(SCRIPT_DIR, "..", "public", "perfumes")
+CUTOUTS_DIR = os.path.join(PERFUMES_DIR, "cutouts")
+FUNDO_FILE = os.path.join(PERFUMES_DIR, "Fundo padrão.jpg")
+
+SKIP = {"amber-rouge.png", "ana-abiyedh-rouge.png", "asad.jpg", "afeef.png"}
 
 
-def make_background(size: int = CANVAS) -> Image.Image:
-    """Gera o fundo padrão: balcão de perfumaria escuro com dourado."""
-    w = h = size
-    # parede: gradiente vertical quente (topo um pouco mais claro)
-    top = np.array([30, 25, 18])
-    mid = np.array([20, 16, 11])
-    bottom = np.array([13, 11, 8])
-    base = np.zeros((h, w, 3), dtype=np.float32)
-    for i in range(h):
-        t = i / (h - 1)
-        if t < 0.55:
-            f = t / 0.55
-            base[i] = top * (1 - f) + mid * f
-        else:
-            f = (t - 0.55) / 0.45
-            base[i] = mid * (1 - f) + bottom * f
-
-    # brilho dourado radial no centro (luz de vitrine)
-    yy, xx = np.mgrid[0:h, 0:w]
-    cx, cy = w / 2, h * 0.42
-    r = np.sqrt((xx - cx) ** 2 + ((yy - cy) * 1.1) ** 2)
-    glow = np.clip(1 - r / (w * 0.62), 0, 1) ** 2
-    gold = np.array([201, 168, 78], dtype=np.float32)
-    base = base + glow[..., None] * gold * 0.14
-
-    # balcão: superfície mais clara com textura sutil de mármore escuro
-    counter_top = int(h * 0.78)
-    counter = np.linspace(0, 1, h - counter_top)[:, None]
-    ct = np.array([48, 40, 28], dtype=np.float32)
-    cb = np.array([26, 22, 16], dtype=np.float32)
-    for i in range(counter_top, h):
-        f = (i - counter_top) / (h - counter_top - 1)
-        base[i] = ct * (1 - f) + cb * f
-
-    # leve ruído para quebrar a uniformidade
-    rng = np.random.default_rng(42)
-    noise = rng.normal(0, 2.2, (h, w, 1)).astype(np.float32)
-    base = np.clip(base + noise, 0, 255).astype(np.uint8)
-
-    img = Image.fromarray(base, "RGB")
-
-    # filete dourado no topo do balcão
-    draw = ImageDraw.Draw(img)
-    for x in range(0, w, 8):
-        draw.line([(x, counter_top - 2), (x + 8, counter_top - 2)], fill=(201, 168, 78), width=2)
-    return img
+def load_background() -> Image.Image:
+    """Carrega o Fundo padrão.jpg real e o escala para o canvas."""
+    bg = Image.open(FUNDO_FILE).convert("RGB")
+    return bg.resize((CANVAS, CANVAS), Image.LANCZOS)
 
 
 def needs_rembg(img: Image.Image) -> bool:
@@ -96,61 +60,57 @@ def needs_rembg(img: Image.Image) -> bool:
     return True
 
 
+def cutout_for(slug: str):
+    """Retorna o caminho do cutout pronto, se existir."""
+    for ext in (".png", ".jpg", ".jpeg", ".webp"):
+        p = os.path.join(CUTOUTS_DIR, slug + ext)
+        if os.path.isfile(p):
+            return p
+    return None
+
+
 def composite(perfume: Image.Image) -> Image.Image:
     """Compoe o frasco (RGBA) sobre o fundo padrão, centralizado, com sombra."""
-    bg = make_background()
+    bg = load_background().convert("RGBA")
     pw, ph = perfume.size
-    target_h = int(CANVAS * 0.76)
-    scale = target_h / ph
-    nw, nh = int(pw * scale), target_h
+
+    # recorta a área não-transparente do frasco (ignora o padding do cutout)
+    a = np.array(perfume.getchannel("A"))
+    ys, xs = np.where(a > 10)
+    if len(xs):
+        x0, x1 = xs.min(), xs.max() + 1
+        y0, y1 = ys.min(), ys.max() + 1
+        perfume = perfume.crop((x0, y0, x1, y1))
+    pw, ph = perfume.size
+
+    # altura do frasco ~70% do canvas, largura limitada a ~80%
+    target_h = int(CANVAS * 0.70)
+    scale = min(target_h / ph, (CANVAS * 0.80) / pw)
+    nw, nh = int(pw * scale), int(ph * scale)
     perfume = perfume.resize((nw, nh), Image.LANCZOS)
 
-    # posição: centralizado horizontalmente, "assentado" no balcão
+    # centralizado horizontalmente, base do frasco em ~95% do canvas
     x = (CANVAS - nw) // 2
-    counter_top = int(CANVAS * 0.78)
-    y = counter_top - nh
+    base_y = int(CANVAS * 0.955)
+    y = base_y - nh
 
-    bg = bg.convert("RGBA")
-
-    # sombra projetada no balcão
+    # sombra projetada no fundo
     alpha = perfume.getchannel("A")
     shadow = ImageOps.invert(alpha.point(lambda p: 255 - p // 3))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(12))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(14))
     shadow_img = Image.new("RGBA", bg.size, (0, 0, 0, 0))
-    shadow_img.paste((0, 0, 0, 180), (x + 18, y + nh + 14), shadow)
+    shadow_img.paste((0, 0, 0, 180), (x + 18, y + nh + 16), shadow)
     bg = Image.alpha_composite(bg, shadow_img)
 
     # frasco em si (inalterado) composto sobre o fundo
     bg.paste(perfume, (x, y), perfume)
 
-    # halo de luz AO REDOR do frasco (nunca atrás dele), destaca frascos escuros
-    halo = Image.new("RGBA", bg.size, (0, 0, 0, 0))
-    halo_draw = ImageDraw.Draw(halo)
-    halo_cx = x + nw // 2
-    halo_cy = y + nh // 2
-    halo_r = max(nw, nh)
-    halo_draw.ellipse(
-        [halo_cx - halo_r, halo_cy - halo_r * 0.9, halo_cx + halo_r, halo_cy + halo_r * 0.9],
-        fill=(231, 215, 174, 46),
-    )
-    halo = halo.filter(ImageFilter.GaussianBlur(halo_r // 7))
-    # remove o halo onde o frasco está (evita lavar vidros transparentes)
-    mask = Image.new("L", bg.size, 255)
-    frasc = Image.new("L", bg.size, 0)
-    frasc.paste(255, (x, y), alpha)
-    frasc = frasc.filter(ImageFilter.GaussianBlur(18))
-    halo.putalpha(ImageChops.multiply(halo.getchannel("A"), ImageOps.invert(frasc)))
-    bg = Image.alpha_composite(bg, halo)
-
     return bg
 
 
 def main() -> None:
-    import sys
-
-    target_dir = sys.argv[1] if len(sys.argv) > 1 else PERFUMES_DIR
-    files = sorted(glob.glob(os.path.join(target_dir, "*")))
-    files = [f for f in files if os.path.isfile(f)]
+    files = sorted(glob.glob(os.path.join(PERFUMES_DIR, "*.*")))
+    files = [f for f in files if os.path.isfile(f) and os.path.dirname(f) == PERFUMES_DIR]
 
     for f in files:
         name = os.path.basename(f)
@@ -158,16 +118,24 @@ def main() -> None:
         if ext not in (".png", ".jpg", ".jpeg", ".webp"):
             print(f"skip (extensão): {name}")
             continue
+        if name in SKIP or name.lower() == "fundo padrão.jpg":
+            print(f"skip (já pronto / fundo): {name}")
+            continue
 
-        im = Image.open(f).convert("RGBA")
+        slug = os.path.splitext(name)[0]
+        cut_path = cutout_for(slug)
 
-        if needs_rembg(im):
-            from rembg import remove, new_session
-
-            session = new_session("u2net")
-            cut = remove(im, session=session).convert("RGBA")
+        if cut_path:
+            cut = Image.open(cut_path).convert("RGBA")
         else:
-            cut = im
+            im = Image.open(f).convert("RGBA")
+            if needs_rembg(im):
+                from rembg import remove, new_session
+
+                session = new_session("u2net")
+                cut = remove(im, session=session).convert("RGBA")
+            else:
+                cut = im
 
         out = composite(cut)
 
@@ -175,7 +143,7 @@ def main() -> None:
             out.convert("RGB").save(f, quality=92, optimize=True)
         else:
             out.save(f, optimize=True)
-        print(f"ok: {name} -> {out.size}")
+        print(f"ok: {name} -> {out.size} (cutout={bool(cut_path)})")
 
 
 if __name__ == "__main__":

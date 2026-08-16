@@ -18,7 +18,7 @@ const slides = [
     title: "Melhores Perfumes Femininos",
     subtitle:
       "Os queridinhos entre as nossas clientes: doces, florais e irresistíveis.",
-    image: "/perfumes/baroque-rouge-extrait-vermelho.png",
+    image: "/perfumes/yara-candy.jpg",
   },
   {
     key: "Masculino",
@@ -26,7 +26,7 @@ const slides = [
     title: "Melhores Perfumes Masculinos",
     subtitle:
       "Fragrâncias marcantes para ele: amadeiradas, aromáticas e intensas.",
-    image: "/perfumes/amber-rouge.png",
+    image: "/perfumes/asad.jpg",
   },
 ];
 

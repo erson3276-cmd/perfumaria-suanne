@@ -26,9 +26,9 @@ export const metadata: Metadata = {
 };
 
 const categoryImages: Record<string, string> = {
-  Feminino: "/perfumes/jouri.jpg",
-  Masculino: "/perfumes/club-de-nuit-intense-man.jpg",
-  Unissex: "/perfumes/khamrah-waha.jpg",
+  Feminino: "/perfumes/yara-candy.jpg",
+  Masculino: "/perfumes/asad.jpg",
+  Unissex: "/perfumes/khamrah.jpg",
 };
 
 const trustItems = [
@@ -167,7 +167,7 @@ export default function HomePage() {
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden border border-gold/25 bg-ink">
             <Image
-              src="/perfumes/amber-rouge.png"
+              src="/perfumes/khamrah.jpg"
               alt="Ateliê Perfumaria Suanne"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

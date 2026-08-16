@@ -33,7 +33,7 @@ export default function SobrePage() {
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden border border-gold/25 bg-ink">
             <Image
-              src="/perfumes/amber-rouge.png"
+              src="/perfumes/khamrah.jpg"
               alt="Ateliê da Perfumaria Suanne"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

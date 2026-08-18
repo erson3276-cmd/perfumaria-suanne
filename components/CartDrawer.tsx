@@ -147,7 +147,7 @@ export default function CartDrawer() {
               </Link>
             <Link
               href="/carrinho"
-              onClick={close}
+              onClick={closeCart}
               className="mb-2 block w-full border border-gold/50 py-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-ivory transition-colors hover:border-gold hover:bg-gold hover:text-ink"
             >
               Ver Carrinho

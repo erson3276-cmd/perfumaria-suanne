@@ -42,10 +42,8 @@ type PaymentBrickProps = {
 };
 
 type PixData = {
-  paymentId: string | number;
-  qrCode: string;
-  qrCodeBase64: string;
-  expiresIn: string;
+  qrCodeDataUrl: string;
+  payload: string;
 };
 
 export default function PaymentBrick({
@@ -62,30 +60,22 @@ export default function PaymentBrick({
   const [copied, setCopied] = useState(false);
 
   const createPix = async () => {
-    if (!payerEmail) return;
     setPixLoading(true);
     setPixError(null);
     setCopied(false);
     try {
-      const res = await fetch("/api/payment", {
+      const res = await fetch("/api/pix", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          payment_method_id: "pix",
-          transaction_amount: amount,
-          payer: { email: payerEmail },
-        }),
+        body: JSON.stringify({ amount }),
       });
       const data = await res.json();
       if (!res.ok) {
         throw new Error(data?.error || "Não foi possível gerar o Pix.");
       }
-      const td = data?.point_of_interaction?.transaction_data ?? {};
       setPix({
-        paymentId: data.id,
-        qrCode: td.qr_code ?? "",
-        qrCodeBase64: td.qr_code_base64 ?? "",
-        expiresIn: td.expires_in ?? "",
+        qrCodeDataUrl: data.qrCodeDataUrl,
+        payload: data.payload,
       });
     } catch (err) {
       setPixError(
@@ -97,9 +87,9 @@ export default function PaymentBrick({
   };
 
   const copyCode = async () => {
-    if (!pix?.qrCode) return;
+    if (!pix?.payload) return;
     try {
-      await navigator.clipboard.writeText(pix.qrCode);
+      await navigator.clipboard.writeText(pix.payload);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
@@ -126,10 +116,10 @@ export default function PaymentBrick({
             Aponte a câmera do seu banco para o QR code e pague em segundos.
           </p>
 
-          {pix.qrCodeBase64 ? (
+          {pix.qrCodeDataUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={`data:image/png;base64,${pix.qrCodeBase64}`}
+              src={pix.qrCodeDataUrl}
               alt="QR Code Pix"
               className="mx-auto mt-5 h-56 w-56 object-contain"
             />
@@ -139,14 +129,12 @@ export default function PaymentBrick({
             </div>
           )}
 
-          <p className="mt-5 text-xs text-ivory-soft">
-            Pagamento <span className="text-ivory">#{pix.paymentId}</span>{" "}
-            {pix.expiresIn
-              ? `• expira em ${pix.expiresIn}`
-              : "• aguardando pagamento"}
+          <p className="mt-5 text-sm text-ivory-soft">
+            Escaneie o QR code ou copie o código Pix abaixo e pague pelo app do
+            seu banco.
           </p>
 
-          {pix.qrCode && (
+          {pix.payload && (
             <button
               type="button"
               onClick={copyCode}

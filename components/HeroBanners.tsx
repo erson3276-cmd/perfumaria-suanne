@@ -36,61 +36,56 @@ export default function HeroBanners() {
   };
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden bg-ink">
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-        <div className="relative aspect-[1744/608] w-full overflow-hidden border border-gold/25 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)]">
-          {banners.map((b, idx) => (
-            <div
-              key={b.key}
-              className={`absolute inset-0 transition-opacity duration-700 ${
-                idx === active ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={b.src}
-                alt={b.alt}
-                fill
-                sizes="(max-width: 1280px) 100vw, 1280px"
-                className="object-cover"
-                priority={idx === 0}
-              />
-            </div>
-          ))}
+    <section className="relative h-[100dvh] w-full overflow-hidden bg-ink">
+      {banners.map((b, idx) => (
+        <div
+          key={b.key}
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            idx === active ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <Image
+            src={b.src}
+            alt={b.alt}
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority={idx === 0}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
         </div>
+      ))}
 
-        <div className="mt-8 flex items-center justify-center gap-6">
+      <button
+        onClick={() => goTo((active + banners.length - 1) % banners.length)}
+        aria-label="Anterior"
+        className="absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center border border-ivory/30 bg-ink/40 text-ivory backdrop-blur-sm transition-colors hover:border-gold hover:bg-gold hover:text-ink sm:left-6"
+      >
+        <IconChevronLeft className="h-5 w-5" />
+      </button>
+
+      <button
+        onClick={() => goTo((active + 1) % banners.length)}
+        aria-label="Próximo"
+        className="absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center border border-ivory/30 bg-ink/40 text-ivory backdrop-blur-sm transition-colors hover:border-gold hover:bg-gold hover:text-ink sm:right-6"
+      >
+        <IconChevronRight className="h-5 w-5" />
+      </button>
+
+      <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
+        {banners.map((b, idx) => (
           <button
-            onClick={() => goTo((active + banners.length - 1) % banners.length)}
-            aria-label="Anterior"
-            className="flex h-11 w-11 items-center justify-center border border-gold/40 text-ivory transition-colors hover:bg-gold hover:text-ink"
-          >
-            <IconChevronLeft className="h-4 w-4" />
-          </button>
-
-          <div className="flex items-center gap-3">
-            {banners.map((b, idx) => (
-              <button
-                key={b.key}
-                onClick={() => goTo(idx)}
-                aria-label={`Ir para ${b.key}`}
-                aria-pressed={active === idx}
-                className={`h-2.5 border transition-all duration-300 ${
-                  active === idx
-                    ? "w-10 border-gold bg-gold"
-                    : "w-2.5 border-ivory/40 bg-transparent hover:border-gold"
-                }`}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={() => goTo((active + 1) % banners.length)}
-            aria-label="Próximo"
-            className="flex h-11 w-11 items-center justify-center border border-gold/40 text-ivory transition-colors hover:bg-gold hover:text-ink"
-          >
-            <IconChevronRight className="h-4 w-4" />
-          </button>
-        </div>
+            key={b.key}
+            onClick={() => goTo(idx)}
+            aria-label={`Ir para ${b.key}`}
+            aria-pressed={active === idx}
+            className={`h-2.5 border transition-all duration-300 ${
+              active === idx
+                ? "w-10 border-gold bg-gold"
+                : "w-2.5 border-ivory/40 bg-transparent hover:border-gold"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );

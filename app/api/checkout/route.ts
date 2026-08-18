@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
     const data = await res.json();
 
     if (!res.ok) {
-      console.error("MP preference error", data);
+      console.error("MP preference error:", data?.status || data?.error || "unknown");
       return NextResponse.json(
         { error: "Falha ao criar pagamento." },
         { status: 502 }
@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
       amount: Math.round(total * 100) / 100,
     });
   } catch (err) {
-    console.error("checkout error", err);
+    console.error("checkout error:", err instanceof Error ? err.message : "unknown");
     return NextResponse.json({ error: "Erro interno." }, { status: 500 });
   }
 }

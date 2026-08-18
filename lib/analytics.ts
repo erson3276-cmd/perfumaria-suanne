@@ -22,9 +22,11 @@ export type AnalyticsItem = TrackedProduct & {
 
 const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "";
 const ga4Id = process.env.NEXT_PUBLIC_GA4_ID ?? "";
+const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
 
 export const hasPixel = () => pixelId.length > 0;
 export const hasGa4 = () => ga4Id.length > 0;
+export const hasGoogleAds = () => googleAdsId.length > 0;
 
 export function initAnalytics(): void {
   if (typeof window === "undefined") return;
@@ -54,6 +56,9 @@ export function initAnalytics(): void {
     document.head.appendChild(s);
     window.gtag("js", new Date());
     window.gtag("config", ga4Id);
+    if (hasGoogleAds()) {
+      window.gtag("config", googleAdsId);
+    }
   }
 }
 
@@ -137,6 +142,14 @@ export function trackPurchase(
     transaction_id: transactionId,
     items: items.map(toGtagItem),
   });
+  if (hasGoogleAds() && window.gtag) {
+    window.gtag("event", "conversion", {
+      send_to: `${googleAdsId}/${transactionId || "pending"}`,
+      value: total,
+      currency: "BRL",
+      transaction_id: transactionId,
+    });
+  }
 }
 
 function toGtagItem(item: AnalyticsItem) {

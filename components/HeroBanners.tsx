@@ -37,7 +37,7 @@ export default function HeroBanners() {
 
   return (
     <section className="relative w-full overflow-hidden bg-ink">
-      <div className="relative aspect-[3/2] w-full sm:aspect-[16/10]">
+      <div className="relative aspect-[5/2] w-full sm:aspect-[3/1]">
         {banners.map((b, idx) => (
           <div
             key={b.key}

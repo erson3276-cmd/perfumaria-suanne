@@ -53,6 +53,22 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${playfair.variable} ${jost.variable}`}
     >
+      <head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18397657783"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-18397657783');
+            `,
+          }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col">
         <script
           type="application/ld+json"

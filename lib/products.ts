@@ -68,11 +68,11 @@ export const products: Product[] = [
     inStock: true,
     olistId: 343312097,
     description:
-      "Delícia açucarada de frutas vermelhas com jasmim e baunilha. Doce, jovem e contagiante.",
+      "Delícia gourmand frutado-floral: tangerina verde e cassis abrem para morango doce (strawberry fizz) e gardenia. Fundo cremoso de sândalo, baunilha, almíscar e âmbar. Doce, jovem e contagiante.",
     notes: {
-      top: ["Frutas Vermelhas"],
-      heart: ["Jasmim"],
-      base: ["Baunilha", "Almíscar"],
+      top: ["Tangerina Verde", "Cassis"],
+      heart: ["Morango Doce", "Gardenia"],
+      base: ["Sândalo", "Baunilha", "Almíscar", "Âmbar"],
     },
   },
   {
@@ -89,11 +89,11 @@ export const products: Product[] = [
     inStock: true,
     olistId: 343315844,
     description:
-      "A \"pérola da noiva\": oriental sofisticado com almíscar branco, baunilha e açafrão sobre madeiras quentes. A elegância da perfumaria árabe.",
+      "A 'pérola da noiva': almíscar branco e cipriol abrem para baunilha, cardamomo e açafrão. Fundo de guaiac e cumaron. Oriental sofisticado que evoca a elegância da perfumaria árabe.",
     notes: {
       top: ["Almíscar Branco", "Cipriol"],
       heart: ["Baunilha", "Cardamomo", "Açafrão"],
-      base: ["Fava Tonka", "Madeira Guaiac"],
+      base: ["Guaiac", "Cumaron"],
     },
   },
   {
@@ -112,11 +112,11 @@ export const products: Product[] = [
     inStock: true,
     olistId: 343312061,
     description:
-      "O gourmand dourado que virou febre: tâmaras, canela e pralinê sobre baunilha e âmbar. Quente, doce e inesquecível.",
+      "O gourmand oriental que virou febre mundial: bergamota, canela e noz-moscada abrem para tâmaras, lírio do vale, pralinê e tuberosa. Fundo envolvente de tonka, benjoim, mirra, akigalawood, baunilha e âmbar. Quente, doce e inesquecível.",
     notes: {
-      top: ["Canela", "Noz-Moscada"],
-      heart: ["Tâmara", "Pralinê"],
-      base: ["Baunilha", "Âmbar", "Fava Tonka"],
+      top: ["Bergamota", "Canela", "Noz-Moscada"],
+      heart: ["Tâmara", "Lírio do Vale", "Pralinê", "Tuberosa"],
+      base: ["Fava Tonka", "Benjoim", "Mirra", "Akigalawood", "Baunilha", "Âmbar"],
     },
   },
   {
@@ -133,11 +133,11 @@ export const products: Product[] = [
     inStock: true,
     olistId: 343312125,
     description:
-      "Um contraste sedutor entre frescor e calor: pêra e hortelã abrem para canela e sálvia, com fundo cremoso de baunilha preta e âmbar.",
+      "Um contraste sedutor entre frescor e calor: pêra, lavanda, hortelã, bergamota e limão abrem para canela, sálvia e cominho. Fundo cremoso de baunilha preta âmbar, cedro e patchouli. Elegante e versátil.",
     notes: {
-      top: ["Pêra", "Lavanda", "Hortelã", "Bergamota"],
+      top: ["Pêra", "Lavanda", "Hortelã", "Bergamota", "Limão"],
       heart: ["Canela", "Sálvia", "Cominho"],
-      base: ["Baunilha Preta", "Âmbar", "Patchouli", "Cedro"],
+      base: ["Baunilha Preta", "Âmbar", "Cedro", "Patchouli"],
     },
   },
   {
@@ -156,11 +156,11 @@ export const products: Product[] = [
     inStock: true,
     olistId: 343312082,
     description:
-      "O elixir marcante inspirado nas notas mais desejadas do momento. Lavanda, pimenta e baunilha em um abraço esfumaçado.",
+      "O elixir oriental marcante da Lattafa: pimenta preta, abacaxi e tabaco abrem para patchouli, café e íris. Fundo de baunilha, âmbar, madeira seca, benjoim e labdano. Intenso, sofisticado e persistente.",
     notes: {
-      top: ["Bergamota", "Pimenta"],
-      heart: ["Lavanda", "Canela"],
-      base: ["Baunilha", "Âmbar", "Pralinê"],
+      top: ["Pimenta Preta", "Abacaxi", "Tabaco"],
+      heart: ["Patchouli", "Café", "Íris"],
+      base: ["Baunilha", "Âmbar", "Madeira Seca", "Benjoim", "Labdano"],
     },
   },
   {
@@ -177,11 +177,11 @@ export const products: Product[] = [
     inStock: true,
     olistId: 343315851,
     description:
-      "Um fougère moderno e versátil: maçã, lavanda e gengibre com fundo amadeirado fresco. O equilíbrio perfeito entre casual e elegante.",
+      "Oriental moderno e versátil (inspirado no YSL Y EDP): maçã, bergamota e gengibre abrem para lavanda, sálvia, zimbro e gerânio. Fundo de tonka, cedro, âmbar e vetiver. O equilíbrio perfeito entre casual e elegante.",
     notes: {
-      top: ["Maçã", "Bergamota"],
-      heart: ["Lavanda", "Gengibre"],
-      base: ["Cedro", "Âmbar", "Madeiras"],
+      top: ["Maçã", "Bergamota", "Gengibre"],
+      heart: ["Lavanda", "Sálvia", "Zimbro", "Gerânio"],
+      base: ["Fava Tonka", "Cedro", "Âmbar", "Vetiver"],
     },
   },
   {
@@ -199,7 +199,7 @@ export const products: Product[] = [
     inStock: true,
     olistId: 343315854,
     description:
-      "A interpretação mais acessível do DNA âmbar-forte: frutado, doce e almiscarado, com caramelo e âmbar cinzento. Um segredo entre os perfumistas.",
+      "A interpretação mais acessível do DNA ambergris (inspirado no Baccarat Rouge 540): pêra nashi, kumquat e bergamota abrem para caramelo e gerânio. Fundo de âmbar cinzento (ambergris), almíscar e musgo de carvalho. Um segredo entre os perfumistas.",
     notes: {
       top: ["Pêra Nashi", "Kumquat", "Bergamota"],
       heart: ["Caramelo", "Gerânio"],
@@ -221,7 +221,7 @@ export const products: Product[] = [
     inStock: true,
     olistId: 343315741,
     description:
-      "O lançamento mais desejado da Lattafa: pêssego e tuberosa sobre pralinê e sândalo. Um floral frutado cremoso, sofisticado e viciante.",
+      "O lançamento mais desejado da Lattafa (2024): bergamota, pimenta rosa e pêssego abrem para jasmim, flor de laranjeira e tuberosa. Fundo cremoso de pralinê, sândalo, âmbar e patchouli. Um floral frutado sofisticado e viciante.",
     notes: {
       top: ["Pêssego", "Pimenta Rosa", "Bergamota"],
       heart: ["Tuberosa", "Jasmim", "Flor de Laranjeira"],

@@ -1,5 +1,17 @@
+import { products } from "./products";
+
 const OLIST_TOKEN = process.env.OLIST_TOKEN || "";
 const OLIST_API_BASE = "https://api.tiny.com.br/api2";
+
+export function slugToOlistId(slug: string): number | null {
+  const product = products.find((p) => p.slug === slug);
+  return product?.olistId ?? null;
+}
+
+export function olistIdToSlug(olistId: number): string | null {
+  const product = products.find((p) => p.olistId === olistId);
+  return product?.slug ?? null;
+}
 
 export type OlistProduct = {
   id: number;
@@ -177,5 +189,83 @@ export async function updateOrderStatus(
   } catch (err) {
     console.error("Olist status update fetch error:", err);
     return false;
+  }
+}
+
+export async function getOrder(
+  orderId: number
+): Promise<Record<string, any> | null> {
+  if (!OLIST_TOKEN) return null;
+
+  try {
+    const res = await fetch(`${OLIST_API_BASE}/pedidos.obter.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `token=${OLIST_TOKEN}&id=${orderId}&formato=JSON`,
+    });
+    const data = await res.json();
+    if (data.retorno?.status === "OK") {
+      return data.retorno.pedido ?? null;
+    }
+    return null;
+  } catch (err) {
+    console.error("Olist getOrder error:", err);
+    return null;
+  }
+}
+
+export async function searchOrders(
+  filters: { situacao?: string; dataInicio?: string; dataFim?: string; pagina?: number } = {}
+): Promise<{ pedidos: Record<string, any>[]; totalPaginas: number }> {
+  if (!OLIST_TOKEN) return { pedidos: [], totalPaginas: 0 };
+
+  const params = new URLSearchParams();
+  params.set("token", OLIST_TOKEN);
+  params.set("formato", "JSON");
+  if (filters.situacao) params.set("situacao", filters.situacao);
+  if (filters.dataInicio) params.set("dataInicio", filters.dataInicio);
+  if (filters.dataFim) params.set("dataFim", filters.dataFim);
+  params.set("pagina", String(filters.pagina || 1));
+
+  try {
+    const res = await fetch(`${OLIST_API_BASE}/pedidos.pesquisa.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString(),
+    });
+    const data = await res.json();
+    if (data.retorno?.status === "OK") {
+      const registros = data.retorno.registros || [];
+      return {
+        pedidos: registros.map((r: Record<string, any>) => r.pedido || r),
+        totalPaginas: data.retorno.pagina_atual
+          ? Math.ceil(data.retorno.total_registros / 50)
+          : 1,
+      };
+    }
+    return { pedidos: [], totalPaginas: 0 };
+  } catch (err) {
+    console.error("Olist searchOrders error:", err);
+    return { pedidos: [], totalPaginas: 0 };
+  }
+}
+
+export async function getProduct(olistId: number): Promise<Record<string, any> | null> {
+  if (!OLIST_TOKEN) return null;
+
+  try {
+    const res = await fetch(`${OLIST_API_BASE}/produto.obter.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `token=${OLIST_TOKEN}&id=${olistId}&formato=JSON`,
+    });
+    const data = await res.json();
+    if (data.retorno?.status === "OK") {
+      return data.retorno.produto ?? null;
+    }
+    return null;
+  } catch (err) {
+    console.error("Olist getProduct error:", err);
+    return null;
   }
 }

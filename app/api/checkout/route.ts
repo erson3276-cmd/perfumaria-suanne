@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const items = Array.isArray(body?.items) ? body.items : [];
+    const customer = body?.customer || null;
 
     if (items.length === 0) {
       return NextResponse.json(
@@ -60,10 +61,28 @@ export async function POST(req: NextRequest) {
 
     const origin = new URL(req.url).origin;
 
+    // Encode customer data and items in metadata for webhook
+    const orderMetadata = {
+      customer: customer || {},
+      items: items.map((item: { id: string; quantity: number }) => {
+        const product = products.find((p) => p.slug === item.id);
+        return {
+          slug: item.id,
+          olistId: product?.olistId || null,
+          name: product?.name || item.id,
+          brand: product?.brand || "",
+          quantity: Math.max(1, Math.min(10, Number(item.quantity) || 1)),
+          price: product?.price || 0,
+        };
+      }),
+      subtotal: total,
+    };
+
     const preference = {
       items: preferenceItems,
       external_reference: `PS-${Date.now()}`,
       statement_descriptor: "PERFUMARIA SUANNE",
+      metadata: orderMetadata,
       back_urls: {
         success: `${origin}/checkout?status=success`,
         pending: `${origin}/checkout?status=pending`,

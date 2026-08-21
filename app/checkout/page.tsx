@@ -220,6 +220,16 @@ export default function CheckoutPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: lines.map((l) => ({ id: l.product.slug, quantity: l.qty })),
+          customer: {
+            nome: form.nome,
+            email: form.email,
+            telefone: form.telefone,
+            cep: form.cep,
+            endereco: form.endereco,
+            cidade: form.cidade,
+            uf: form.uf,
+            observacoes: form.observacoes,
+          },
         }),
       });
       const data = await res.json();

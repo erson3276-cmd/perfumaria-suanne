@@ -45,7 +45,7 @@ export const products: Product[] = [
     badge: "Novo",
     featured: false,
     inStock: true,
-    olistId: 0,
+    olistId: 343312153,
     description:
       "O \"amanhecer das rosas\": floral oriental que une cacau, flor de laranjeira e jasmim sambac sobre baunilha e patchouli. Doce, elegante e com presença marcante.",
     notes: {
@@ -66,7 +66,7 @@ export const products: Product[] = [
     image: "/perfumes/yara-candy.jpg",
     featured: false,
     inStock: true,
-    olistId: 0,
+    olistId: 343312097,
     description:
       "Delícia açucarada de frutas vermelhas com jasmim e baunilha. Doce, jovem e contagiante.",
     notes: {
@@ -87,7 +87,7 @@ export const products: Product[] = [
     image: "/perfumes/Durrat-Al-Aroos (2).jpg",
     featured: false,
     inStock: true,
-    olistId: 0,
+    olistId: 343315844,
     description:
       "A \"pérola da noiva\": oriental sofisticado com almíscar branco, baunilha e açafrão sobre madeiras quentes. A elegância da perfumaria árabe.",
     notes: {
@@ -110,7 +110,7 @@ export const products: Product[] = [
     badge: "Best Seller",
     featured: true,
     inStock: true,
-    olistId: 0,
+    olistId: 343312061,
     description:
       "O gourmand dourado que virou febre: tâmaras, canela e pralinê sobre baunilha e âmbar. Quente, doce e inesquecível.",
     notes: {
@@ -131,7 +131,7 @@ export const products: Product[] = [
     image: "/perfumes/attar-al-wesal-novo.jpg",
     featured: false,
     inStock: true,
-    olistId: 0,
+    olistId: 343312125,
     description:
       "Um contraste sedutor entre frescor e calor: pêra e hortelã abrem para canela e sálvia, com fundo cremoso de baunilha preta e âmbar.",
     notes: {
@@ -154,7 +154,7 @@ export const products: Product[] = [
     badge: "Favorito",
     featured: true,
     inStock: true,
-    olistId: 0,
+    olistId: 343312082,
     description:
       "O elixir marcante inspirado nas notas mais desejadas do momento. Lavanda, pimenta e baunilha em um abraço esfumaçado.",
     notes: {
@@ -175,7 +175,7 @@ export const products: Product[] = [
     image: "/perfumes/Fakhar Black.jpg",
     featured: false,
     inStock: true,
-    olistId: 0,
+    olistId: 343315851,
     description:
       "Um fougère moderno e versátil: maçã, lavanda e gengibre com fundo amadeirado fresco. O equilíbrio perfeito entre casual e elegante.",
     notes: {
@@ -197,7 +197,7 @@ export const products: Product[] = [
     badge: "Novo",
     featured: false,
     inStock: true,
-    olistId: 0,
+    olistId: 343315854,
     description:
       "A interpretação mais acessível do DNA âmbar-forte: frutado, doce e almiscarado, com caramelo e âmbar cinzento. Um segredo entre os perfumistas.",
     notes: {
@@ -219,7 +219,7 @@ export const products: Product[] = [
     badge: "Novo",
     featured: false,
     inStock: true,
-    olistId: 0,
+    olistId: 343315741,
     description:
       "O lançamento mais desejado da Lattafa: pêssego e tuberosa sobre pralinê e sândalo. Um floral frutado cremoso, sofisticado e viciante.",
     notes: {

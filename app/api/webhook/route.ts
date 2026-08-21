@@ -14,9 +14,9 @@ async function sendWhatsAppNotification(message: string): Promise<void> {
   }
 }
 
-function formatOrderMessage(payment: Record<string, unknown>): string {
+function formatOrderMessage(payment: Record<string, any>): string {
   const items = payment?.additional_info?.items || [];
-  const itemNames = items.map((i: Record<string, unknown>) => i.title).join(", ");
+  const itemNames = items.map((i: Record<string, any>) => i.title).join(", ");
   const amount = payment?.transaction_amount;
   const payerName = payment?.payer?.first_name || "Cliente";
   const payerEmail = payment?.payer?.email || "N/A";
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
-    const payment = await res.json();
+    const payment: Record<string, any> = await res.json();
 
     const status = payment?.status;
     const externalRef = payment?.external_reference;
@@ -73,10 +73,10 @@ export async function POST(req: NextRequest) {
       await sendWhatsAppNotification(message);
 
       const items = payment?.additional_info?.items || [];
-      const payer = payment?.payer || {};
+      const payer: Record<string, any> = payment?.payer || {};
 
       if (items.length > 0) {
-        const olistItems = items.map((item: Record<string, unknown>) => ({
+        const olistItems = items.map((item: Record<string, any>) => ({
           idProduto: 0,
           quantidade: item.quantity || 1,
           valorUnitario: item.unit_price || 0,

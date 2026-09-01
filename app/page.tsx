@@ -15,6 +15,7 @@ import {
   IconArrowRight,
   IconGift,
   IconShield,
+  IconSpray,
   IconTruck,
   IconWhatsapp,
 } from "@/components/icons";
@@ -34,8 +35,8 @@ const categoryImages: Record<string, string> = {
 const trustItems = [
   {
     icon: IconTruck,
-    title: "Envio Nacional",
-    text: "Para todo o Brasil, com código de rastreio",
+    title: "Frete Grátis",
+    text: "Para todo o Brasil em compras acima de R$ 300",
   },
   {
     icon: IconShield,
@@ -46,6 +47,11 @@ const trustItems = [
     icon: IconGift,
     title: "Embalagem Presente",
     text: "Aperfeiçoada para presentear",
+  },
+  {
+    icon: IconSpray,
+    title: "Curadoria Árabe",
+    text: "Essências raras selecionadas a dedo",
   },
 ];
 
@@ -70,6 +76,12 @@ export default function HomePage() {
   return (
     <div>
       <HeroBanners />
+
+      <div className="bg-gold text-ink">
+        <div className="mx-auto max-w-7xl px-5 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.25em] sm:text-xs">
+          ✦ Frete grátis para todo o Brasil em compras acima de R$ 300 ✦
+        </div>
+      </div>
 
       <div className="border-y border-gold/20 bg-ink py-4 text-center text-ivory">
         <p className="px-4 text-[11px] uppercase tracking-[0.3em] text-ivory/85">
@@ -255,10 +267,10 @@ export default function HomePage() {
             href={`https://wa.me/${site.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-gold mt-8"
+            className="btn-outline mt-8"
           >
             <IconWhatsapp className="h-4 w-4" />
-            Chamar no WhatsApp
+            Tirar Dúvidas no WhatsApp
           </a>
         </div>
       </section>

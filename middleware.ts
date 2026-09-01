@@ -42,7 +42,7 @@ export function middleware(req: NextRequest) {
     let limit = 30;
     let windowMs = 60_000;
 
-    if (pathname.startsWith("/api/payment") || pathname.startsWith("/api/pix")) {
+    if (pathname.startsWith("/api/payment")) {
       limit = 10;
     }
     if (pathname.startsWith("/api/checkout")) {

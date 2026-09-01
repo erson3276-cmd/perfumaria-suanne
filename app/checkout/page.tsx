@@ -150,7 +150,14 @@ export default function CheckoutPage() {
       setPaidStatus(status === "pending" ? "pending" : "approved");
       setStep("paid");
       clear();
-      firePurchaseIfNew(id);
+      // Só disparamos o Purchase no navegador quando o pagamento já veio
+      // confirmado (ex: cartão aprovado na hora). Pix "pending" é confirmado
+      // depois pelo webhook do Mercado Pago, que envia o evento via
+      // Conversions API server-side — evita contar compra que pode não
+      // se confirmar.
+      if (status === "success") {
+        firePurchaseIfNew(id);
+      }
     }
   }, [clear]);
 

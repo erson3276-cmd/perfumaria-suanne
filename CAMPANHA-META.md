@@ -11,7 +11,7 @@
 |---|---|
 | Objetivo | **Vendas** (Conversões) |
 | Evento de conversão | **Compra** (Purchase) |
-| Pixel | Perfumaria Suanne (`2259516491492637`) |
+| Pixel | Perfumaria Suanne (`2852416835144977`) |
 | Orçamento | **R$ 30/dia** (≈ R$ 900/mês) |
 | Duração | Contínua, ajustável a cada 2–3 dias |
 | Produto principal do 1º anúncio | **Khamrah — Lattafa** (`/produtos/khamrah`) |

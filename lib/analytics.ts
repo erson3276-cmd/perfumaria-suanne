@@ -62,8 +62,17 @@ export function initAnalytics(): void {
   }
 }
 
-function fbqEvent(event: string, params: Record<string, unknown>): void {
-  if (hasPixel()) window.fbq?.("track", event, params);
+function fbqEvent(
+  event: string,
+  params: Record<string, unknown>,
+  eventId?: string
+): void {
+  if (!hasPixel()) return;
+  if (eventId) {
+    window.fbq?.("track", event, params, { eventID: eventId });
+  } else {
+    window.fbq?.("track", event, params);
+  }
 }
 
 function gtagEvent(
@@ -128,14 +137,18 @@ export function trackPurchase(
   total: number,
   transactionId?: string
 ): void {
-  fbqEvent("Purchase", {
-    content_ids: items.map((i) => i.slug),
-    content_type: "product",
-    num_items: items.reduce((acc, i) => acc + i.qty, 0),
-    value: total,
-    currency: "BRL",
-    transaction_id: transactionId,
-  });
+  fbqEvent(
+    "Purchase",
+    {
+      content_ids: items.map((i) => i.slug),
+      content_type: "product",
+      num_items: items.reduce((acc, i) => acc + i.qty, 0),
+      value: total,
+      currency: "BRL",
+      transaction_id: transactionId,
+    },
+    transactionId
+  );
   gtagEvent("purchase", {
     currency: "BRL",
     value: total,

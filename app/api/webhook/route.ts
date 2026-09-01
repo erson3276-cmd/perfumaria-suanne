@@ -1,8 +1,89 @@
 import { NextRequest, NextResponse } from "next/server";
+import crypto from "crypto";
 import { createOrder, updateOrderStatus, slugToOlistId } from "@/lib/olist";
 
 const ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN;
 const WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "5521982755539";
+
+const META_PIXEL_ID =
+  process.env.META_PIXEL_ID || process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const META_CAPI_TOKEN = process.env.META_CAPI_ACCESS_TOKEN;
+
+function sha256(value: string): string {
+  return crypto
+    .createHash("sha256")
+    .update(value.trim().toLowerCase())
+    .digest("hex");
+}
+
+// Envia o evento de Compra direto pro Meta a partir do servidor.
+// Cobre casos que o pixel do navegador perde: Pix confirmado depois que o
+// cliente fechou a aba, Safari/ITP bloqueando o pixel, ad blockers, etc.
+// O event_id (id do pagamento) é o mesmo usado no fbq do navegador —
+// o Meta deduplica automaticamente se os dois chegarem.
+async function sendMetaPurchaseEvent(
+  payment: Record<string, any>,
+  metadata?: Record<string, any>
+): Promise<void> {
+  if (!META_PIXEL_ID || !META_CAPI_TOKEN) {
+    console.warn(
+      "Meta CAPI: META_PIXEL_ID ou META_CAPI_ACCESS_TOKEN não configurados — evento server-side não enviado"
+    );
+    return;
+  }
+
+  const customer = metadata?.customer || {};
+  const payer: Record<string, any> = payment?.payer || {};
+  const email: string = customer.email || payer.email || "";
+  const rawPhone: string = customer.telefone || payer.phone?.number || "";
+  const phoneDigits = rawPhone.replace(/\D/g, "");
+  const amount = payment?.transaction_amount || 0;
+
+  const userData: Record<string, unknown> = {};
+  if (email) userData.em = [sha256(email)];
+  if (phoneDigits) {
+    const withCountryCode = phoneDigits.startsWith("55")
+      ? phoneDigits
+      : `55${phoneDigits}`;
+    userData.ph = [sha256(withCountryCode)];
+  }
+
+  const eventPayload = {
+    data: [
+      {
+        event_name: "Purchase",
+        event_time: Math.floor(Date.now() / 1000),
+        event_id: String(payment.id),
+        action_source: "website",
+        event_source_url: "https://perfumariasuanne.com.br/checkout",
+        user_data: userData,
+        custom_data: {
+          currency: "BRL",
+          value: amount,
+        },
+      },
+    ],
+  };
+
+  try {
+    const res = await fetch(
+      `https://graph.facebook.com/v21.0/${META_PIXEL_ID}/events?access_token=${META_CAPI_TOKEN}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(eventPayload),
+      }
+    );
+    const json = await res.json();
+    if (!res.ok) {
+      console.error("Meta CAPI: erro ao enviar evento", json);
+    } else {
+      console.log("Meta CAPI: Purchase enviado", json);
+    }
+  } catch (err) {
+    console.error("Meta CAPI: falha na requisição", err);
+  }
+}
 
 async function sendWhatsAppNotification(message: string): Promise<void> {
   try {
@@ -157,6 +238,9 @@ export async function POST(req: NextRequest) {
       } else {
         console.warn("Webhook: no valid Olist items found for payment", id);
       }
+
+      // Envia o evento de Compra pro Meta via Conversions API
+      await sendMetaPurchaseEvent(payment, metadata);
 
       // Send WhatsApp notification
       const message = formatOrderMessage(payment, metadata);

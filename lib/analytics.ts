@@ -20,7 +20,7 @@ export type AnalyticsItem = TrackedProduct & {
   qty: number;
 };
 
-const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "";
+const pixelId = "2852416835144977";
 const ga4Id = process.env.NEXT_PUBLIC_GA4_ID ?? "";
 const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
 

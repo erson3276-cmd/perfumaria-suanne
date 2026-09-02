@@ -203,7 +203,7 @@ function PaymentBrickNative({
           customization: {
             paymentMethods:
               method === "pix"
-                ? { bankTransfer: ["pix"] }
+                ? { bankTransfer: "all" }
                 : {
                     creditCard: "all",
                     debitCard: "all",

@@ -154,7 +154,7 @@ export const products: Product[] = [
     badge: "Novo",
     featured: false,
     inStock: true,
-    olistId: 343315741,
+    olistId: 342470975,
     description:
       "O lançamento mais desejado da Lattafa (2024): bergamota, pimenta rosa e pêssego abrem para jasmim, flor de laranjeira e tuberosa. Fundo cremoso de pralinê, sândalo, âmbar e patchouli. Um floral frutado sofisticado e viciante.",
     notes: {

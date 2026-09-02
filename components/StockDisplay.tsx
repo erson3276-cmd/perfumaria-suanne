@@ -19,9 +19,7 @@ export default function StockDisplay({ olistId }: StockDisplayProps) {
           body: JSON.stringify({ productId: olistId }),
         });
         const data = await res.json();
-        if (res.ok) {
-          setStock(data.stock);
-        }
+        if (res.ok) setStock(data.stock);
       } catch {
         // silently fail
       } finally {
@@ -33,21 +31,19 @@ export default function StockDisplay({ olistId }: StockDisplayProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2 text-sm text-gray-400">
-        <div className="animate-pulse h-2 w-2 bg-gray-300 rounded-full" />
-        Verificando estoque...
+      <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-ivory-soft/50">
+        <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-gold/40" />
+        Verificando estoque…
       </div>
     );
   }
 
-  if (stock === null) {
-    return null;
-  }
+  if (stock === null) return null;
 
   if (stock <= 0) {
     return (
-      <div className="flex items-center gap-2 text-sm text-red-600">
-        <div className="h-2 w-2 bg-red-500 rounded-full" />
+      <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-wine">
+        <span className="inline-block h-2 w-2 rounded-full bg-wine" />
         Esgotado
       </div>
     );
@@ -55,16 +51,16 @@ export default function StockDisplay({ olistId }: StockDisplayProps) {
 
   if (stock <= 3) {
     return (
-      <div className="flex items-center gap-2 text-sm text-amber-600">
-        <div className="h-2 w-2 bg-amber-500 rounded-full animate-pulse" />
+      <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-gold">
+        <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-gold" />
         Últimas {stock} unidades!
       </div>
     );
   }
 
   return (
-    <div className="flex items-center gap-2 text-sm text-green-600">
-      <div className="h-2 w-2 bg-green-500 rounded-full" />
+    <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-ivory-soft">
+      <span className="inline-block h-2 w-2 rounded-full bg-gold/60" />
       Em estoque ({stock} unidades)
     </div>
   );

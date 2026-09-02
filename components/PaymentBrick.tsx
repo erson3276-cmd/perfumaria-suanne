@@ -41,17 +41,107 @@ type PaymentBrickProps = {
   onCancel: () => void;
 };
 
-// O próprio Payment Brick do Mercado Pago já mostra Pix (QR dinâmico +
-// copia e cola) e cartão dentro do mesmo componente, com confirmação
-// automática via webhook — não precisamos de nenhuma lógica própria de
-// Pix aqui.
 export default function PaymentBrick({
   preferenceId,
-  amount,
   payerEmail,
   onApproved,
   onCancel,
 }: PaymentBrickProps) {
+  const [method, setMethod] = useState<"pix" | "card" | null>(null);
+
+  const methodTitle = method === "pix" ? "Pix" : "Pagamento";
+
+  if (method) {
+    return (
+      <div className="mx-auto max-w-xl">
+        <div className="flex items-center justify-between">
+          <h3 className="font-serif text-xl text-ivory">{methodTitle}</h3>
+          <button
+            type="button"
+            onClick={onCancel}
+            className="text-sm text-ivory-soft underline-offset-2 hover:text-ivory hover:underline"
+          >
+            ← Voltar aos dados
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setMethod(null)}
+          className="mt-6 text-sm text-ivory-soft underline-offset-2 hover:text-ivory hover:underline"
+        >
+          ← Escolher outro meio de pagamento
+        </button>
+
+        <PaymentBrickNative
+          method={method}
+          preferenceId={preferenceId}
+          payerEmail={payerEmail}
+          onApproved={onApproved}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-xl">
+      <div className="flex items-center justify-between">
+        <h3 className="font-serif text-xl text-ivory">Pagamento</h3>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="text-sm text-ivory-soft underline-offset-2 hover:text-ivory hover:underline"
+        >
+          ← Voltar aos dados
+        </button>
+      </div>
+
+      <div className="mt-6 space-y-4">
+        <button
+          type="button"
+          onClick={() => setMethod("pix")}
+          className="flex w-full items-center justify-between border border-gold/30 bg-cream p-6 text-left hover:border-gold"
+        >
+          <span>
+            <span className="block font-serif text-lg text-ivory">Pix</span>
+            <span className="mt-1 block text-sm text-ivory-soft">
+              Pague na hora com QR code — aprovação automática.
+            </span>
+          </span>
+          <span className="text-2xl text-gold">→</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setMethod("card")}
+          className="flex w-full items-center justify-between border border-gold/30 bg-cream p-6 text-left hover:border-gold"
+        >
+          <span>
+            <span className="block font-serif text-lg text-ivory">
+              Cartão de crédito ou débito
+            </span>
+            <span className="mt-1 block text-sm text-ivory-soft">
+              Parcelamento disponível.
+            </span>
+          </span>
+          <span className="text-2xl text-gold">→</span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PaymentBrickNative({
+  method,
+  preferenceId,
+  payerEmail,
+  onApproved,
+}: {
+  method: "pix" | "card";
+  preferenceId: string;
+  payerEmail?: string;
+  onApproved: (payment: MPPayment) => void;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const instanceRef = useRef<PaymentBrickInstance | null>(null);
   const [ready, setReady] = useState(false);
@@ -92,30 +182,35 @@ export default function PaymentBrick({
         const bricks = await mp.bricks();
         const instance = await bricks.create("payment", BRICK_CONTAINER_ID, {
           initialization: {
-            amount,
             preferenceId,
             payer: {
               email: payerEmail ?? "",
             },
           },
           customization: {
-            paymentMethods: {
-              creditCard: "all",
-              debitCard: "all",
-              prepaidCard: "all",
-              bankTransfer: "all",
-            },
+            paymentMethods:
+              method === "pix"
+                ? { bankTransfer: ["pix"] }
+                : {
+                    creditCard: "all",
+                    debitCard: "all",
+                    prepaidCard: "all",
+                  },
             visual: { style: { theme: "default", verticalPadding: "16px" } },
           },
           callbacks: {
             onReady: () => {
               if (!cancelled) setReady(true);
             },
-            onSubmit: ({ formData }: { formData: Record<string, unknown> }) =>
-              fetch("/api/payment", {
+            onSubmit: ({ formData }: { formData: Record<string, unknown> }) => {
+              const mergedFormData = {
+                ...formData,
+                preferenceId,
+              };
+              return fetch("/api/payment", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(mergedFormData),
               })
                 .then((res) => res.json())
                 .then((payment: MPPayment) => {
@@ -134,7 +229,8 @@ export default function PaymentBrick({
                 .catch(() => ({
                   type: "error" as const,
                   detail: { message: "Pagamento recusado. Tente novamente." },
-                })),
+                }));
+            },
             onError: (brickError: { message?: string }) => {
               if (!cancelled) {
                 setError(
@@ -169,25 +265,15 @@ export default function PaymentBrick({
         instanceRef.current = null;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preferenceId, amount, payerEmail]);
+  }, [method, preferenceId, payerEmail, onApproved]);
 
   return (
-    <div className="mx-auto max-w-xl">
-      <div className="flex items-center justify-between">
-        <h3 className="font-serif text-xl text-ivory">Pagamento</h3>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="text-sm text-ivory-soft underline-offset-2 hover:text-ivory hover:underline"
-        >
-          ← Voltar aos dados
-        </button>
-      </div>
-
+    <>
       {!ready && !error && (
         <div className="mt-6 border border-gold/25 bg-cream px-6 py-8 text-center text-sm text-ivory-soft">
-          Carregando formas de pagamento seguras…
+          {method === "pix"
+            ? "Carregando opções de Pix…"
+            : "Carregando formas de pagamento seguras…"}
         </div>
       )}
 
@@ -204,6 +290,6 @@ export default function PaymentBrick({
         id={BRICK_CONTAINER_ID}
         className={`mt-6 ${error || !ready ? "hidden" : ""}`}
       />
-    </div>
+    </>
   );
 }

@@ -11,11 +11,11 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="border-b border-ivory/10 py-16 text-center">
           <Image
-            src="/logo.jpg"
+            src="/logo.svg"
             alt="Logo Perfumaria Suanne"
             width={72}
             height={72}
-            className="mx-auto h-16 w-16 rounded-full object-cover"
+            className="mx-auto h-16 w-16"
           />
           <p className="mt-4 font-serif text-3xl text-ivory sm:text-4xl">
             Perfumaria <span className="gold-text">Suanne</span>
@@ -126,6 +126,11 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. Todos os direitos
             reservados.
+            {site.cnpj && (
+              <span className="block pt-1">
+                {site.razaoSocial} · CNPJ {site.cnpj}
+              </span>
+            )}
           </p>
           <p className="flex items-center gap-2">
             <span className="text-gold">✦</span>

@@ -8,6 +8,8 @@ export const site = {
   instagram: "https://instagram.com/suannechagas",
   address: "Avenida João Ribeiro, 444 — Loja D, Pilares, Rio de Janeiro/RJ",
   cep: "20750095",
+  cnpj: "51.525.743/0001-16",
+  razaoSocial: "Ruiney Meireles de Oliveira ME",
   giftAbove: 300,
   shippingFee: 19.9,
   freeShippingAbove: 300,

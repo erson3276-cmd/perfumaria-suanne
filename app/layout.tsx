@@ -54,20 +54,9 @@ export default function RootLayout({
       className={`${playfair.variable} ${jost.variable}`}
     >
       <head>
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18397657783"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-18397657783');
-            `,
-          }}
-        />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://sdk.mercadopago.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
       </head>
       <body className="flex min-h-screen flex-col">
         <script
@@ -89,6 +78,9 @@ export default function RootLayout({
                 addressCountry: "BR",
               },
               areaServed: "BR",
+              ...(site.cnpj ? {
+                identifier: { "@type": "PropertyValue", name: "CNPJ", value: site.cnpj },
+              } : {}),
             }),
           }}
         />

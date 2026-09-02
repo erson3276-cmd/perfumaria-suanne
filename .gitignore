@@ -39,6 +39,9 @@ build.log
 # vercel
 .vercel
 
+# backup de imagens originais
+.img-backup/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

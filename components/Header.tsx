@@ -37,8 +37,8 @@ export default function Header() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-2 text-[10px] uppercase tracking-[0.25em] lg:px-8">
           <p className="flex items-center gap-2 text-ivory/75">
             <IconTruck className="h-3.5 w-3.5 text-gold" />
-            <span className="hidden sm:inline">Envio para todo o Brasil</span>
-            <span className="sm:hidden">Enviamos para todo o Brasil</span>
+            <span className="hidden sm:inline">Frete grátis acima de R$ 300 · envio com rastreio</span>
+            <span className="sm:hidden">Frete grátis acima de R$ 300</span>
           </p>
           <a
             href={`https://wa.me/${site.whatsapp}`}
@@ -85,11 +85,11 @@ export default function Header() {
 
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/logo.jpg"
+              src="/logo.svg"
               alt="Logo Perfumaria Suanne"
               width={48}
               height={48}
-              className="h-11 w-11 rounded-full object-cover"
+              className="h-11 w-11"
             />
             <span className="text-left">
               <span className="block font-serif text-xl leading-none tracking-wide text-ivory sm:text-2xl">

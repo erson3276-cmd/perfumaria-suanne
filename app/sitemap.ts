@@ -6,7 +6,6 @@ const categoryRoutes = [
   "feminino",
   "masculino",
   "unissex",
-  "presentes",
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {

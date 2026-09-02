@@ -11,6 +11,7 @@ import ProductImage from "@/components/ProductImage";
 import ProductCard from "@/components/ProductCard";
 import Rating from "@/components/Rating";
 import AddToCart from "@/components/AddToCart";
+import StockDisplay from "@/components/StockDisplay";
 import FreteCalculator from "@/components/FreteCalculator";
 import ProductViewTracker from "@/components/ProductViewTracker";
 import Ornament from "@/components/Ornament";
@@ -69,7 +70,6 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
 
   const hash = hashCode(product.slug);
   const weeklyBuyers = 24 + (hash % 180);
-  const lowStock = hash % 3 === 0;
 
   return (
     <div>
@@ -221,6 +221,12 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
               {formatBRL(product.price / 3)} sem juros no cartão
             </p>
 
+            {product.olistId && (
+              <div className="mt-3">
+                <StockDisplay olistId={product.olistId} />
+              </div>
+            )}
+
             <p className="mt-6 leading-relaxed text-ivory-soft">
               {product.description}
             </p>
@@ -230,12 +236,6 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
                 <span className="font-semibold text-gold">{weeklyBuyers}</span>{" "}
                 clientes escolheram esta fragrância esta semana
               </p>
-              {lowStock && (
-                <p className="mt-1 text-sm text-ivory-soft">
-                  Restam poucas unidades — quando esgotar, a reposição pode
-                  demorar semanas.
-                </p>
-              )}
             </div>
 
             <AddToCart product={product} />

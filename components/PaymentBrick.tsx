@@ -13,6 +13,7 @@ type PaymentBrickInstance = {
 };
 
 const BRICK_CONTAINER_ID = "payment-brick-container";
+const STATUS_CONTAINER_ID = "status-screen-brick-container";
 
 type MercadoPagoConstructor = new (
   publicKey: string,
@@ -20,7 +21,7 @@ type MercadoPagoConstructor = new (
 ) => {
   bricks: () => Promise<{
     create: (
-      kind: "payment",
+      kind: "payment" | "statusScreen",
       container: string,
       settings: Record<string, unknown>
     ) => Promise<PaymentBrickInstance>;
@@ -150,6 +151,13 @@ function PaymentBrickNative({
   const instanceRef = useRef<PaymentBrickInstance | null>(null);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Assim que o pagamento é criado (Pix pendente ou cartão em
+  // processamento), trocamos para o payment.id — isso dispara a troca
+  // do formulário pelo Status Screen Brick, que é quem realmente mostra
+  // o QR code / copia-e-cola e acompanha a confirmação em tempo real.
+  const [createdPaymentId, setCreatedPaymentId] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -224,8 +232,13 @@ function PaymentBrickNative({
                     payment.status === "pending" ||
                     payment.status === "in_process"
                   ) {
-                    if (payment.status === "approved" && !cancelled) {
-                      onApproved(payment);
+                    if (!cancelled) {
+                      // Mostra a tela de status (QR/copia-e-cola/confirmação)
+                      // em vez de deixar o Brick cair na mensagem genérica.
+                      setCreatedPaymentId(String(payment.id));
+                      if (payment.status === "approved") {
+                        onApproved(payment);
+                      }
                     }
                     return { type: "success", detail: payment };
                   }
@@ -260,7 +273,9 @@ function PaymentBrickNative({
       }
     };
 
-    init();
+    if (!createdPaymentId) {
+      init();
+    }
 
     return () => {
       cancelled = true;
@@ -270,7 +285,89 @@ function PaymentBrickNative({
         instanceRef.current = null;
       }
     };
-  }, [method, preferenceId, amount, payerEmail, onApproved]);
+  }, [method, preferenceId, amount, payerEmail, onApproved, createdPaymentId]);
+
+  // Uma vez que o pagamento foi criado, desmonta o Payment Brick e monta
+  // o Status Screen Brick no lugar — é ele quem renderiza o QR code do
+  // Pix (ou o status do cartão) de verdade.
+  const statusContainerRef = useRef<HTMLDivElement>(null);
+  const statusInstanceRef = useRef<PaymentBrickInstance | null>(null);
+  const [statusReady, setStatusReady] = useState(false);
+  const [statusError, setStatusError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!createdPaymentId) return;
+    let cancelled = false;
+
+    const init = async () => {
+      const publicKey = process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY;
+      if (!publicKey || !statusContainerRef.current) return;
+      try {
+        const mp = new window.MercadoPago(publicKey, { locale: "pt-BR" });
+        const bricks = await mp.bricks();
+        const instance = await bricks.create(
+          "statusScreen",
+          STATUS_CONTAINER_ID,
+          {
+            initialization: { paymentId: createdPaymentId },
+            callbacks: {
+              onReady: () => {
+                if (!cancelled) setStatusReady(true);
+              },
+              onError: (statusScreenError: { message?: string }) => {
+                if (!cancelled) {
+                  setStatusError(
+                    statusScreenError?.message ||
+                      "Não foi possível carregar o status do pagamento."
+                  );
+                }
+              },
+            },
+          }
+        );
+        if (cancelled) {
+          instance.unmount();
+          return;
+        }
+        statusInstanceRef.current = instance;
+      } catch (err) {
+        if (!cancelled) {
+          console.error("StatusScreen init error:", err);
+          setStatusError("Não foi possível carregar o status do pagamento.");
+        }
+      }
+    };
+
+    init();
+
+    return () => {
+      cancelled = true;
+      statusInstanceRef.current?.unmount();
+      statusInstanceRef.current = null;
+    };
+  }, [createdPaymentId]);
+
+  if (createdPaymentId) {
+    return (
+      <>
+        {!statusReady && !statusError && (
+          <div className="mt-6 border border-gold/25 bg-cream px-6 py-8 text-center text-sm text-ivory-soft">
+            Carregando status do pagamento…
+          </div>
+        )}
+        {statusError && (
+          <p className="mt-6 border border-red-900/60 bg-red-950/40 px-4 py-3 text-sm text-red-300">
+            {statusError}
+          </p>
+        )}
+        <div
+          ref={statusContainerRef}
+          id={STATUS_CONTAINER_ID}
+          className={`mt-6 ${statusError || !statusReady ? "hidden" : ""}`}
+        />
+      </>
+    );
+  }
 
   return (
     <>

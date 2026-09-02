@@ -43,6 +43,7 @@ type PaymentBrickProps = {
 
 export default function PaymentBrick({
   preferenceId,
+  amount,
   payerEmail,
   onApproved,
   onCancel,
@@ -76,6 +77,7 @@ export default function PaymentBrick({
         <PaymentBrickNative
           method={method}
           preferenceId={preferenceId}
+          amount={amount}
           payerEmail={payerEmail}
           onApproved={onApproved}
         />
@@ -134,11 +136,13 @@ export default function PaymentBrick({
 function PaymentBrickNative({
   method,
   preferenceId,
+  amount,
   payerEmail,
   onApproved,
 }: {
   method: "pix" | "card";
   preferenceId: string;
+  amount: number;
   payerEmail?: string;
   onApproved: (payment: MPPayment) => void;
 }) {
@@ -182,6 +186,7 @@ function PaymentBrickNative({
         const bricks = await mp.bricks();
         const instance = await bricks.create("payment", BRICK_CONTAINER_ID, {
           initialization: {
+            amount,
             preferenceId,
             payer: {
               email: payerEmail ?? "",
@@ -265,7 +270,7 @@ function PaymentBrickNative({
         instanceRef.current = null;
       }
     };
-  }, [method, preferenceId, payerEmail, onApproved]);
+  }, [method, preferenceId, amount, payerEmail, onApproved]);
 
   return (
     <>

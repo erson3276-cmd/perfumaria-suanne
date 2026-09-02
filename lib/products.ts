@@ -68,6 +68,7 @@ export const products: Product[] = [
     badge: "Novo",
     featured: false,
     inStock: true,
+    olistId: 347467078,
     description:
       "A delicadeza do Yara em versão rosé: orquídea, heliotrópio e tangerina abrem para um coração gourmand de frutas tropicais. Fundo cremoso de baunilha, almíscar e sândalo. Doce, feminina e viciante.",
     notes: {
@@ -110,6 +111,7 @@ export const products: Product[] = [
     image: "/perfumes/no-2-men.jpg",
     featured: false,
     inStock: true,
+    olistId: 347467088,
     description:
       "Aromático moderno e limpo (inspirado no DNA do 212 Men): bergamota e lavanda abrem para gengibre e cardamomo. Fundo amadeirado de vetiver, incenso, sândalo, guaiac e ládano. Elegante, fresco e versátil.",
     notes: {
@@ -195,6 +197,7 @@ export const products: Product[] = [
     image: "/perfumes/intrude.jpg",
     featured: false,
     inStock: true,
+    olistId: 347467106,
     description:
       "Oriental especiado sofisticado da Maison Alhambra: citrinos e framboesa com pimenta rosa abrem para jasmim, rosa e íris. Fundo amadeirado e balsâmico de âmbar, patchouli e almíscar. Envolvente, dramática e marcante.",
     notes: {
@@ -238,6 +241,7 @@ export const products: Product[] = [
     image: "/perfumes/odyssey-spectra.jpg",
     featured: false,
     inStock: true,
+    olistId: 347467132,
     description:
       "O fougère oriental intenso da Armaf (inspirado no DNA do Ultra Male): maçã, canela e bergamota abrem para lavanda, flor de laranjeira e muguet. Fundo doce-amadeirado de vani, tonka, âmbar, patchouli e tabaco. Potente, doce e irresistível.",
     notes: {
@@ -258,6 +262,7 @@ export const products: Product[] = [
     image: "/perfumes/yara-moi.jpg",
     featured: false,
     inStock: true,
+    olistId: 347467142,
     description:
       "A irmã branca e elegante do Yara: jasmim e pêssego abrem para um coração aconchegante de caramelo e âmbar. Fundo de patchouli e sândalo traz profundidade. Aveludada, feminina e sofisticada.",
     notes: {
@@ -280,6 +285,7 @@ export const products: Product[] = [
     badge: "Favorito",
     featured: false,
     inStock: true,
+    olistId: 347467147,
     description:
       "O fenômeno da Armaf (inspirado no DNA do Aventus): limão, abacaxi e groselha preta abrem para bétula, jasmim e rosa. Fundo de âmbar cinzento, patchouli, baunilha e almíscar. Esfumaçado, imponente e de presença absurda.",
     notes: {
@@ -329,6 +335,28 @@ export const products: Product[] = [
       top: ["Maçã", "Bergamota", "Gengibre"],
       heart: ["Lavanda", "Sálvia", "Zimbro", "Gerânio"],
       base: ["Fava Tonka", "Cedro", "Âmbar", "Vetiver"],
+    },
+  },
+  {
+    slug: "yeah-man",
+    name: "Yeah! Man",
+    brand: "Maison Alhambra",
+    category: "Masculino",
+    price: 199.9,
+    rating: 4.7,
+    reviews: 29,
+    size: "100ml",
+    image: "/perfumes/yeah-man.jpg",
+    badge: "Novo",
+    featured: false,
+    inStock: true,
+    olistId: 347467165,
+    description:
+      "A versão da Maison Alhambra inspirada no DNA do YSL Y EDP: maçã, gengibre e bergamota abrem para sálvia, zimbro e gerânio. Fundo envolvente de tonka, cedro, vetiver, âmbar e olíbano. Moderno, vibrante e irresistível.",
+    notes: {
+      top: ["Maçã", "Gengibre", "Bergamota"],
+      heart: ["Sálvia", "Zimbro", "Gerânio"],
+      base: ["Fava Tonka", "Cedro", "Amberwood", "Vetiver", "Olíbano"],
     },
   },
 ];

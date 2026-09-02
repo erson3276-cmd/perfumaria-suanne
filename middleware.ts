@@ -31,7 +31,7 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
   "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
   "Content-Security-Policy":
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sdk.mercadopago.com https://connect.facebook.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.mercadopago.com https://graph.facebook.com https://www.google-analytics.com; frame-src https://sdk.mercadopago.com;",
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sdk.mercadopago.com https://*.mercadopago.com https://*.mercadolibre.com https://*.mlstatic.com https://connect.facebook.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://*.mercadopago.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://api.mercadopago.com https://*.mercadopago.com https://*.mlstatic.com https://graph.facebook.com https://www.google-analytics.com; frame-src https://sdk.mercadopago.com https://*.mercadopago.com;",
 };
 
 export function middleware(req: NextRequest) {
@@ -42,7 +42,7 @@ export function middleware(req: NextRequest) {
     let limit = 30;
     let windowMs = 60_000;
 
-    if (pathname.startsWith("/api/payment") || pathname.startsWith("/api/pix")) {
+    if (pathname.startsWith("/api/payment")) {
       limit = 10;
     }
     if (pathname.startsWith("/api/checkout")) {

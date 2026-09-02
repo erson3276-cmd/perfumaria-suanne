@@ -86,12 +86,30 @@ async function sendMetaPurchaseEvent(
 }
 
 async function sendWhatsAppNotification(message: string): Promise<void> {
+  const apiKey = process.env.CALLMEBOT_API_KEY;
+  const cleanNumber = WHATSAPP_NUMBER.replace(/\D/g, "");
+
+  if (!apiKey) {
+    console.warn(
+      "CALLMEBOT_API_KEY não configurado — notificação de WhatsApp não enviada (só logada)"
+    );
+    console.log(
+      `WhatsApp notification (não enviada): https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
+    );
+    return;
+  }
+
   try {
-    const cleanNumber = WHATSAPP_NUMBER.replace(/\D/g, "");
-    const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
-    console.log(`WhatsApp notification: ${url}`);
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${cleanNumber}&text=${encodeURIComponent(message)}&apikey=${apiKey}`;
+    const res = await fetch(url);
+    const text = await res.text();
+    if (!res.ok) {
+      console.error("CallMeBot: erro ao enviar WhatsApp", text);
+    } else {
+      console.log("CallMeBot: notificação de WhatsApp enviada");
+    }
   } catch (err) {
-    console.error("WhatsApp notification error:", err);
+    console.error("CallMeBot: falha na requisição", err);
   }
 }
 

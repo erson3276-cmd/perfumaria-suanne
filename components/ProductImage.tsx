@@ -14,7 +14,7 @@ type Props = {
 export default function ProductImage({
   src,
   alt,
-  className = "object-contain",
+  className = "object-cover",
   sizes = "(max-width: 768px) 100vw, 33vw",
   priority = false,
 }: Props) {

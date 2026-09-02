@@ -27,7 +27,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <ProductImage
           src={product.image}
           alt={product.name}
-          className="object-contain transition-transform duration-700 group-hover:scale-105"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
           <span className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-gold/15" />
       </Link>

@@ -37,7 +37,7 @@ export default function SobrePage() {
               alt="Ateliê da Perfumaria Suanne"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-contain p-8"
+              className="object-cover"
             />
           </div>
           <div>

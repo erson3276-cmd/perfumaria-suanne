@@ -32,7 +32,7 @@ export default function ProductCardPromo({
         <ProductImage
           src={product.image}
           alt={product.name}
-          className="object-contain p-2 transition-transform duration-700 group-hover:scale-105 sm:p-3"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
         {position ? (
           <span className="absolute left-0 top-0 bg-gradient-to-r from-gold to-gold-light px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-ivory">

@@ -174,7 +174,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
               alt={product.name}
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-contain"
+              className="object-cover"
             />
             <span className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-gold/15" />
             {product.badge && (

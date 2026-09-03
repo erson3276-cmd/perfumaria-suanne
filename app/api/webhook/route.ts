@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
-import { createOrder, updateOrderStatus, slugToOlistId } from "@/lib/olist";
+import { createOrder, updateOrderStatus, cancelOrder, slugToOlistId } from "@/lib/olist";
+import { storePaymentMapping, getPaymentMapping, deletePaymentMapping } from "@/lib/kv";
 
 const ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN;
 const WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "5521982755539";
@@ -252,6 +253,9 @@ export async function POST(req: NextRequest) {
 
           // Update order status to Aprovado
           await updateOrderStatus(orderResult, "Aprovado");
+
+          // Store payment → order mapping so we can cancel on rejection
+          await storePaymentMapping(id, orderResult, externalRef || "");
         }
       } else {
         console.warn("Webhook: no valid Olist items found for payment", id);
@@ -268,8 +272,20 @@ export async function POST(req: NextRequest) {
       console.log(`Webhook: payment #${id} PENDING`);
     } else if (status === "rejected" || status === "cancelled") {
       console.log(`Webhook: payment #${id} ${status.toUpperCase()}`);
-      // Note: we can't cancel Olist order here because we don't have the Olist order ID
-      // This would require storing the mapping payment_id → olist_order_id
+
+      // Look up the Olist order via KV mapping and cancel it
+      const mapping = await getPaymentMapping(id);
+      if (mapping?.olistOrderId) {
+        const cancelled = await cancelOrder(mapping.olistOrderId);
+        if (cancelled) {
+          console.log(`Webhook: Olist order #${mapping.olistOrderId} cancelled (payment ${status})`);
+        } else {
+          console.error(`Webhook: failed to cancel Olist order #${mapping.olistOrderId}`);
+        }
+        await deletePaymentMapping(id);
+      } else {
+        console.warn(`Webhook: no Olist mapping found for payment #${id} — order not cancelled`);
+      }
     }
 
     return NextResponse.json({ ok: true });

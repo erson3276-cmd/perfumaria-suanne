@@ -192,6 +192,10 @@ export async function updateOrderStatus(
   }
 }
 
+export async function cancelOrder(orderId: number): Promise<boolean> {
+  return updateOrderStatus(orderId, "Cancelado");
+}
+
 export async function getOrder(
   orderId: number
 ): Promise<Record<string, any> | null> {
